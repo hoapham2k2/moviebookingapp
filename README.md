@@ -43,3 +43,7 @@ This is a movie booking application that allows users to book movie tickets onli
 
 - [Pham Quang Hoa](https://github.com/hoapham2k2)
 - ...
+
+## ERD
+
+![ERD](public/moviebookingapp_ERD.webp)
