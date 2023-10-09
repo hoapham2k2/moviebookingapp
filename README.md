@@ -47,3 +47,7 @@ This is a movie booking application that allows users to book movie tickets onli
 ## ERD
 
 ![ERD](public/moviebookingapp_ERD.webp)
+
+## User Flow
+
+![User Flow](public/moviebookingapp-UserFlow.webp)
