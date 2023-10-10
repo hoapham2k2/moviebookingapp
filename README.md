@@ -35,6 +35,8 @@ This is a movie booking application that allows users to book movie tickets onli
 
 - Clone the repository
 - Run `npm install` to install dependencies
+- Run `npm install -g @ionic/cli` to install Ionic CLI 
+- Run `npm install -g @capacitor/core @capacitor/cli` to install Capacitor CLI
 - Run `ionic serve` to start the application
 - If you want to run on android, run `ionic capacitor run android --livereload --external` to start the application
 - If you want to run on ios, run `ionic capacitor run ios --livereload --external` to start the application
