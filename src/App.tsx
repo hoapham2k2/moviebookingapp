@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
   IonPage,
@@ -66,6 +66,6 @@ const App = () => {
       </IonReactRouter>
     </IonApp>
   );
-};  
+};
 
 export default App;
