@@ -7,6 +7,7 @@ import {
 } from "@ionic/react";
 import store from "../../config/storage/IonicStorage";
 import { useEffect, useState } from "react";
+
 const Home: React.FC = () => {
   const [user_id, setUserId] = useState<string>("");
 
