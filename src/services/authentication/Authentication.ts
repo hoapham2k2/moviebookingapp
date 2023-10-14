@@ -1,5 +1,6 @@
 import supabase from "../../config/supabase/supabase";
 import LoginRequestDTO from "../../dtos/LoginRequestDTO";
+import GenerateRandomPassword from "../../utils/GenerateRandomPassword";
 
 export const loginUser = async (data: LoginRequestDTO) => {
   const { email, password } = data;
@@ -44,6 +45,21 @@ export const registerUser = async (mydata: any) => {
     console.log("Register success");
   } catch (error) {
     console.log("Register error: ", error);
+    throw error;
+  }
+};
+
+export const forgotPassword = async (email: string): Promise<any | null> => {
+  try {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    console.log("Forgot password error: ", error);
     throw error;
   }
 };

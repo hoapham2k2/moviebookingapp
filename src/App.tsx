@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import {
   IonApp,
   IonPage,
@@ -31,6 +31,13 @@ import LoginPage from "./pages/login/Login";
 import RegisterPage from "./pages/register/Register";
 import { useEffect, useState } from "react";
 import store from "./config/storage/IonicStorage";
+import TicketsListPage from "./pages/tickets-list/TicketsList";
+import WishListPage from "./pages/wishlist/WishList";
+import ProfilePage from "./pages/profile/Profile";
+import MovieDetailPage from "./pages/movie-detail/MovieDetail";
+import TicketBookingPage from "./pages/ticket-booking/TicketBooking";
+import ForgotPasswordPage from "./pages/forgot-password/ForgotPassword";
+import MuiProvider from "./providers/MuiProvider";
 
 setupIonicReact();
 
@@ -44,28 +51,55 @@ const App = () => {
   }, []);
 
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route
-            path={"/home"}
-            component={() => (
-              <AppLayout>
-                <Home />
-              </AppLayout>
-            )}
-            exact={true}
-          />
-          <Route path="/page/:name" component={AppLayout} exact={true} />
-          <Route path="/login" component={LoginPage} exact={true} />
-          <Route path="/register" component={RegisterPage} exact={true} />
-          <Route exact path="/">
-            {access_token ? <Redirect to="/home" /> : <LoginPage />}
-          </Route>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
+    <MuiProvider>
+      <IonApp>
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <AppLayout>
+              <Route path={"/home"} component={() => <Home />} exact={true} />
+              <Route
+                path={"/tickets-list"}
+                component={() => <TicketsListPage />}
+                exact={true}
+              />
+              <Route
+                path={"/wishlist"}
+                component={() => <WishListPage />}
+                exact={true}
+              />
+              <Route
+                path={"/profile"}
+                component={() => <ProfilePage />}
+                exact={true}
+              />
+              <Route
+                path={"/home/:id"}
+                component={() => <MovieDetailPage />}
+                exact={true}
+              />
+              <Route
+                path={"/home/ticket/movieId=:id"}
+                component={() => <TicketBookingPage />}
+                exact={true}
+              />
+            </AppLayout>
+            <Route path="/page/:name" component={AppLayout} exact={true} />
+            <Route path="/login" component={LoginPage} exact={true} />
+            <Route path="/register" component={RegisterPage} exact={true} />
+            <Route
+              path="/forgot-password"
+              component={ForgotPasswordPage}
+              exact={true}
+            />
+            <Route exact path="/">
+              {access_token ? <Redirect to="/home" /> : <LoginPage />}
+            </Route>
+            {/* route còn lại sẽ redirect sang Errorpage */}
+          </IonRouterOutlet>
+        </IonReactRouter>
+      </IonApp>
+    </MuiProvider>
   );
-};  
+};
 
 export default App;

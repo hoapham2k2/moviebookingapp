@@ -16,11 +16,10 @@ type Props = {
 const AppLayout = (props: Props) => {
   return (
     <IonPage>
-      <AppHeader />
-      <IonContent fullscreen>
+      <IonContent>
         <div className="w-full h-full">{props.children}</div>
-        <AppFooter />
       </IonContent>
+      <AppFooter />
     </IonPage>
   );
 };

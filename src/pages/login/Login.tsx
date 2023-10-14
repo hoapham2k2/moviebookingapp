@@ -56,6 +56,9 @@ const LoginPage = (props: Props) => {
         <input type="submit" />
       </form>
       <button className="mt-4">
+        <Link to="/forgot-password">Forgot Password</Link>
+      </button>
+      <button className="mt-4">
         <Link to="/register">Register</Link>
       </button>
     </div>
