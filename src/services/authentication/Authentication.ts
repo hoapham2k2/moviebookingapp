@@ -63,3 +63,4 @@ export const forgotPassword = async (email: string): Promise<any | null> => {
     throw error;
   }
 };
+

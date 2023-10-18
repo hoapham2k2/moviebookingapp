@@ -7,10 +7,23 @@ import {
   CurrencyDollarIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import { logoutUser } from "../../services/authentication/Authentication";
+import store from "../../config/storage/IonicStorage";
+import { useHistory } from "react-router-dom";
 
 type Props = {};
 
 const ProfilePage = (props: Props) => {
+  const router = useHistory();
+
+  const handleLogOut = async () => {
+    await logoutUser();
+    await store.remove("token");
+    await store.remove("refresh_token");
+    await store.remove("user_id");
+    router.push("/login");
+  };
+
   return (
     <div className="flex flex-col items-center justify-center ">
       <div className="flex flex-col mt-12 justify-center items-center mb-10">
@@ -63,7 +76,9 @@ const ProfilePage = (props: Props) => {
           <div className="relative flex ">
             <ArrowRightOnRectangleIcon className="w-6 h-6 mr-1" />
           </div>
-          <p className="text-lg">Log out</p>
+          <p className="text-lg" onClick={handleLogOut}>
+            Log out
+          </p>
         </div>
         <div className="col-span-2"></div>
       </div>
