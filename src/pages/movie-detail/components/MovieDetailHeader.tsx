@@ -19,14 +19,14 @@ const MovieDetailHeader = (props: Props) => {
         <img
           src={props.movie.thumbnail}
           alt={props.movie.title}
-          className="w-full h-full object-cover"
+          className="w-full h-auto object-cover"
         />
       </div>
 
       {/* Movie Details (col-span-8) */}
       <div className={`col-span-8 h-full flex flex-col gap-3`}>
         <div className=" grid grid-cols-12 flex-1">
-          <div className="col-span-10 font-bold text-xl flex items-center">
+          <div className="col-span-10 font-bold text-lg flex items-center">
             {handlePreviewString(props.movie.title, 40)}
           </div>
           <div className="col-span-2  justify-end flex items-center">

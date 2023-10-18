@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   const [user_id, setUserId] = useState<string>("");
 
   useEffect(() => {
-    store.get("user_id").then((res) => {
+    store.get("user_id").then((res: any) => {
       setUserId(res);
     });
   }, []);

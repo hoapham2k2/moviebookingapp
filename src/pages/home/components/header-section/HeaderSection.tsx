@@ -6,9 +6,7 @@ type Props = {};
 
 const HeaderSection = (props: Props) => {
   return (
-    <div
-      className={`h-32 sticky top-0 left-0 right-0 px-4 py-3 border-b bg-black`}
-    >
+    <div className={`h-32 sticky top-0 left-0 right-0 px-4 py-3  bg-black`}>
       <div className="grid grid-cols-12 h-1/2">
         {/* avatar section */}
         <div className="col-span-2 flex justify-start items-center">
@@ -39,7 +37,8 @@ const HeaderSection = (props: Props) => {
             <div className="col-span-10 flex justify-center items-center">
               <input
                 type="text"
-                className="w-full h-full px-4 bg-transparent outline-none"
+                placeholder="Search by movies or cinema"
+                className="w-full h-full px-4 bg-transparent outline-none text-sm border border-transparent focus:ring-transparent focus:ring-0 "
               />
             </div>
             {/* filter section */}

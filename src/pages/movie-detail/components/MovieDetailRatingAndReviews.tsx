@@ -47,9 +47,9 @@ const MovieDetailRatingAndReviews = (props: Props) => {
                 <SwiperSlide key={index}>
                   <div className="w-full h-full flex flex-col gap-2 mt-48">
                     <div className="flex gap-2 items-center">
-                      <div className="w-12 h-12 rounded-full bg-zinc-700"></div>
+                      <div className="w-10 h-10 rounded-full bg-zinc-700"></div>
                       <div className="flex flex-col gap-1">
-                        <div className="text-white font-bold text-md">
+                        <div className="text-white font-bold text-sm">
                           User Name
                         </div>
                         <div className="text-neutral-500 text-sm">
@@ -57,7 +57,7 @@ const MovieDetailRatingAndReviews = (props: Props) => {
                         </div>
                       </div>
                     </div>
-                    <div className="text-white text-sm">
+                    <div className="text-white text-xs">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Quia, voluptate.
                     </div>

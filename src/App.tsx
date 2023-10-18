@@ -38,6 +38,8 @@ import MovieDetailPage from "./pages/movie-detail/MovieDetail";
 import TicketBookingPage from "./pages/ticket-booking/TicketBooking";
 import ForgotPasswordPage from "./pages/forgot-password/ForgotPassword";
 import MuiProvider from "./providers/MuiProvider";
+import Payment from "./pages/payments/Payment";
+import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
 
 setupIonicReact();
 
@@ -45,7 +47,7 @@ const App = () => {
   const [access_token, setAccessToken] = useState<string>("");
 
   useEffect(() => {
-    store.get("token").then((res) => {
+    store.get("token").then((res: any) => {
       setAccessToken(res);
     });
   }, []);
@@ -89,6 +91,12 @@ const App = () => {
             <Route
               path="/forgot-password"
               component={ForgotPasswordPage}
+              exact={true}
+            />
+            <Route path="/payment" component={() => <Payment />} exact={true} />
+            <Route
+              path="/paymentStatus"
+              component={() => <PaymentStatus />}
               exact={true}
             />
             <Route exact path="/">

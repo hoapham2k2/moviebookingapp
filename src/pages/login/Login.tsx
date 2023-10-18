@@ -4,6 +4,7 @@ import LoginRequestDTO from "../../dtos/LoginRequestDTO";
 import { Link, useHistory } from "react-router-dom";
 import { loginUser } from "../../services/authentication/Authentication";
 import store from "../../config/storage/IonicStorage";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 
 type Props = {};
 
@@ -35,32 +36,48 @@ const LoginPage = (props: Props) => {
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-center">
+    <div className="relative h-full flex flex-col items-center justify-center">
       <form
         method="post"
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col "
+        className="grid gap-5 w-full p-4"
       >
-        <input
-          type="text"
-          placeholder="Email"
-          {...register("email", { required: true })}
-        />
+        <h1 className="text-2xl font-semibold">Welcome back, Kevin</h1>
+        <p>Please log in</p>
+        <div className="flex items-center border border-slate-400 p-2 rounded-md">
+          <EnvelopeIcon className="w-6 h-6 mr-2" />
+          <input
+            type="text"
+            placeholder="Email"
+            className="bg-black outline-none p-0.5 w-full border border-transparent"
+            {...register("email", { required: true })}
+          />
+        </div>
         {errors.email && <span>This field is required</span>}
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password", { required: true })}
-        />
+        <div className="flex items-center border border-slate-400 p-2 rounded-md">
+          <LockClosedIcon className="w-6 h-6 mr-2" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="bg-black outline-none p-0.5 w-full border border-transparent"
+            {...register("password", { required: true })}
+          />
+        </div>
+        <Link to="/forgot-password">Forgot password?</Link>
         {errors.password && <span>This field is required</span>}
-        <input type="submit" />
+        <input
+          type="submit"
+          value={"Sign In"}
+          className="bg-red-500 rounded-md p-2"
+        />
       </form>
-      <button className="mt-4">
-        <Link to="/forgot-password">Forgot Password</Link>
-      </button>
-      <button className="mt-4">
-        <Link to="/register">Register</Link>
-      </button>
+
+      <div className="fixed bottom-4">
+        Don't have account?{" "}
+        <Link to="/register" className="font-bold">
+          Register
+        </Link>
+      </div>
     </div>
   );
 };

@@ -16,8 +16,8 @@ const MovieDetailBody = (props: Props) => {
         {/* tạo 2 tab 'Movie Detail' và 'Rating & Review */}
         <div className="col-span-1">
           <div
-            className={`text-center  cursor-pointer ${
-              activeTab === "Movie Detail" ? "border-b pb-2" : ""
+            className={`text-center cursor-pointer ${
+              activeTab === "Movie Detail" ? "border-b pb-2 text-rose-500" : ""
             }`}
             onClick={() => {
               setActiveTab("Movie Detail");
@@ -29,7 +29,9 @@ const MovieDetailBody = (props: Props) => {
         <div className="col-span-1">
           <div
             className={`text-center  cursor-pointer ${
-              activeTab === "Rating & Review" ? "border-b pb-2" : ""
+              activeTab === "Rating & Review"
+                ? "border-b pb-2 text-rose-500"
+                : ""
             }`}
             onClick={() => {
               setActiveTab("Rating & Review");

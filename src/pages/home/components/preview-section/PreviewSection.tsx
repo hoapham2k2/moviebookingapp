@@ -36,9 +36,11 @@ const PreviewSection = (props: Props) => {
   return (
     <div className="">
       <div className="div-full flex items-center justify-between">
-        <div className="text-xl font-bold text-white">{props.name}</div>
-        <div className="text-red-700 font-semibold hover:underline-offset-auto hover:underline">
-          See all
+        <div className="text-base font-semibold text-white mb-2">
+          {props.name}
+        </div>
+        <div className=" text-sm text-red-700 font-semibold hover:underline-offset-auto hover:underline">
+          View all
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
@@ -50,7 +52,7 @@ const PreviewSection = (props: Props) => {
                 key={item.title}
                 className="col-span-1"
               >
-                <div className="w-full h-60 rounded-xl bg-zinc-700">
+                <div className="w-full h-48 rounded-xl bg-zinc-700">
                   <img
                     src={`${item.thumbnail}`}
                     alt={`${item.title}`}
@@ -59,7 +61,7 @@ const PreviewSection = (props: Props) => {
                 </div>
                 <div className="w-full grid grid-cols-6">
                   <div
-                    className="text-white mt-2 text col-span-5
+                    className=" text-xs text-white mt-2 text col-span-5
                   "
                   >
                     {handlePreviewString(item.title, 25)}

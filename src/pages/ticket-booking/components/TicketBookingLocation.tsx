@@ -46,9 +46,9 @@ const TicketBookingLocation = (props: Props) => {
   return (
     <div className="w-full h-full flex flex-col gap-4">
       <div className="flex flex-col">
-        <p className="text-2xl font-bold">Location</p>
+        <p className="text-base mb-1">Location</p>
         <select
-          className="w-full h-10 border rounded-md"
+          className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={locationRef}
           onChange={(e) => {
             setLocation(e.target.value);
@@ -58,7 +58,7 @@ const TicketBookingLocation = (props: Props) => {
         >
           {myDataLocation.map((item, index) => {
             return (
-              <option value={item.location} key={index}>
+              <option className="text-xs" value={item.location} key={index}>
                 {item.location}
               </option>
             );
@@ -67,9 +67,9 @@ const TicketBookingLocation = (props: Props) => {
       </div>
 
       <div className="flex flex-col">
-        <p className="text-2xl font-bold">Cinema Location</p>
+        <p className="text-base mb-1">Cinema Location</p>
         <select
-          className="w-full h-10 border rounded-md"
+          className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={cinemaLocationRef}
           value={cinemaLocation}
           onChange={(e) => {
