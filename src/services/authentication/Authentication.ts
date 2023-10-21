@@ -1,10 +1,11 @@
 import supabase from "../../config/supabase/supabase";
 import LoginRequestDTO from "../../dtos/LoginRequestDTO";
+import RegisterGetDTO from "../../dtos/RegisterGetDTO";
+import RegisterPostDTO from "../../dtos/RegisterPostDTO";
 import GenerateRandomPassword from "../../utils/GenerateRandomPassword";
 
 export const loginUser = async (data: LoginRequestDTO) => {
   const { email, password } = data;
-
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
@@ -14,7 +15,6 @@ export const loginUser = async (data: LoginRequestDTO) => {
     if (error) {
       throw error;
     }
-
     return data;
   } catch (error) {
     console.log("Login error: ", error);
@@ -26,9 +26,7 @@ export const logoutUser = async () => {
   await supabase.auth.signOut();
 };
 
-export const registerUser = async (mydata: any) => {
-  console.log("Register data: ", mydata);
-  const { email, password } = mydata;
+export const registerUser = async (mydata: RegisterPostDTO): Promise<any> => {
   try {
     const { data, error } = await supabase.auth.signUp({
       email: mydata.email,
@@ -41,6 +39,31 @@ export const registerUser = async (mydata: any) => {
         },
       },
     });
+
+    // const registerData = { ...data };
+
+    // if (registerData) {
+    //   try {
+    //     const { data, error } = await supabase.from("tbl_user").insert([
+    //       {
+    //         id: registerData.user?.id,
+    //         first_name: mydata.firstName,
+    //         last_name: mydata.lastName,
+    //         phone_number: mydata.phone,
+    //         email: mydata.email,
+    //       },
+    //     ]);
+
+    //     if (data) return data;
+    //     if (error) throw error;
+    //   } catch (error) {
+    //     console.log("Add user to database error: ", error);
+    //     throw error;
+    //   }
+    // }
+    if (error) {
+      throw error;
+    }
 
     console.log("Register success");
   } catch (error) {
@@ -63,4 +86,3 @@ export const forgotPassword = async (email: string): Promise<any | null> => {
     throw error;
   }
 };
-

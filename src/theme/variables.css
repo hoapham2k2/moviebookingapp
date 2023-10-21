@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -201,7 +200,7 @@ http://ionicframework.com/docs/theming/ */
    */
 
   .md body {
-    --ion-background-color: #121212;
+    --ion-background-color: #000;
     --ion-background-color-rgb: 18, 18, 18;
 
     --ion-text-color: #ffffff;
@@ -236,5 +235,21 @@ http://ionicframework.com/docs/theming/ */
     --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1e1e1e;
+  }
+}
+
+@layer base {
+  .clip-path {
+    clip-path: ellipse(100px 80px at center);
+  }
+  .custom-checkbox:checked::before {
+    content: "x"; /* Replace the tick with an 'x' */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white; /* Set the color of the 'x' to your desired color */
+    text-align: center;
+    line-height: 1em;
   }
 }

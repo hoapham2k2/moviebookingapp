@@ -10,18 +10,47 @@ import {
 import { logoutUser } from "../../services/authentication/Authentication";
 import store from "../../config/storage/IonicStorage";
 import { useHistory } from "react-router-dom";
+import UserGetDTO from "../../dtos/UserGetDTO";
+import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
 
 type Props = {};
 
 const ProfilePage = (props: Props) => {
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useHistory();
+  const [myProfile, setMyProfile] = React.useState({});
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    store
+      .get("myUser")
+      .then((res) => {
+        console.log("my user from profile", res);
+        setMyProfile({ ...res });
+      })
+      .then(() => {
+        console.log(myProfile);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   const handleLogOut = async () => {
-    await logoutUser();
-    await store.remove("token");
-    await store.remove("refresh_token");
-    await store.remove("user_id");
-    router.push("/login");
+    setIsLoading(true);
+    await logoutUser()
+      .then(() => {
+        store.clear();
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .then(() => {
+        alert("Log out successfully");
+      })
+      .then(() => {
+        router.push("/login");
+      });
   };
 
   return (
@@ -31,8 +60,21 @@ const ProfilePage = (props: Props) => {
           src="https://cdn.sforum.vn/sforum/wp-content/uploads/2021/07/lol-t1-1.jpg"
           className="bg-slate-700 border rounded-full w-28 h-28 object-cover"
         ></img>
-        <p className="mt-2 text-sm text-slate-500">@leesanghyeok</p>
-        <h1 className="text-lg">Lee Sang Hyeok</h1>
+        <h1 className="text-lg mt-4">
+          {
+            //@ts-ignore
+            myProfile.user_metadata ? (
+              <div>
+                {
+                  //@ts-ignore
+                  `${myProfile.user_metadata.firstName} ${myProfile.user_metadata.lastName}`
+                }
+              </div>
+            ) : (
+              <div></div>
+            )
+          }
+        </h1>
       </div>
       <div className="w-full px-4 py-2 grid grid-cols-2 active:scale-90 transition-all duration-300 ease-in-out">
         <div className="col-span-2 flex p-2 rounded-lg border border-slate-600 bg-slate-950 ">

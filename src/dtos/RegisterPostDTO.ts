@@ -1,4 +1,4 @@
-export default class RegisterRequestDTO {
+export default class RegisterPostDTO {
   public email: string;
   public password: string;
   public firstName: string;

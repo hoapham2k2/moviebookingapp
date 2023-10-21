@@ -40,7 +40,8 @@
     "react-icons": "^4.11.0",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
-    "swiper": "^10.3.1"
+    "swiper": "^10.3.1",
+    "vnpay": "^0.2.0"
   },
   "devDependencies": {
     "@capacitor/cli": "5.4.2",

@@ -2,9 +2,25 @@ import React from "react";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { IoFilterOutline } from "react-icons/io5";
+import store from "../../../../config/storage/IonicStorage";
 type Props = {};
 
 const HeaderSection = (props: Props) => {
+  const [myProfile, setMyProfile] = React.useState({});
+
+  React.useEffect(() => {
+    store
+      .get("myUser")
+      .then((res) => {
+        console.log("my user from profile", res);
+        setMyProfile({ ...res });
+      })
+      .then(() => {
+        console.log(myProfile);
+      })
+      .finally(() => {});
+  }, []);
+
   return (
     <div className={`h-32 sticky top-0 left-0 right-0 px-4 py-3  bg-black`}>
       <div className="grid grid-cols-12 h-1/2">
@@ -14,7 +30,21 @@ const HeaderSection = (props: Props) => {
         </div>
         {/* user info section */}
         <div className="col-span-8 flex flex-col justify-center">
-          <div className="text font-semibold">Hello, John Doe</div>
+          <div className="text font-semibold flex gap-2">
+            {
+              //@ts-ignore
+              myProfile.user_metadata ? (
+                <div>
+                  {
+                    //@ts-ignore
+                    `Hello, ${myProfile.user_metadata.firstName} ${myProfile.user_metadata.lastName}`
+                  }
+                </div>
+              ) : (
+                <div></div>
+              )
+            }
+          </div>
           <div className="text-sm font-bold text-neutral-600">
             How do you feel today?
           </div>

@@ -44,11 +44,11 @@ import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
 setupIonicReact();
 
 const App = () => {
-  const [access_token, setAccessToken] = useState<string>("");
+  const [mySession, setMySession] = useState<any>({});
 
   useEffect(() => {
-    store.get("token").then((res: any) => {
-      setAccessToken(res);
+    store.get("mySession").then((res: any) => {
+      setMySession(res);
     });
   }, []);
 
@@ -100,9 +100,8 @@ const App = () => {
               exact={true}
             />
             <Route exact path="/">
-              {access_token ? <Redirect to="/home" /> : <LoginPage />}
+              {mySession.access_token ? <Redirect to="/home" /> : <LoginPage />}
             </Route>
-            {/* route còn lại sẽ redirect sang Errorpage */}
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
