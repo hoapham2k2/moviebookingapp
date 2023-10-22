@@ -40,11 +40,19 @@ import ForgotPasswordPage from "./pages/forgot-password/ForgotPassword";
 import MuiProvider from "./providers/MuiProvider";
 import Payment from "./pages/payments/Payment";
 import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
+import ReactGA from "react-ga4";
 
 setupIonicReact();
 
 const App = () => {
   const [mySession, setMySession] = useState<any>({});
+
+  ReactGA.initialize("G-ELBET3E24P");
+  ReactGA.send({
+    hitType: "pageview",
+    page: "/home",
+    title: "Custom Title",
+  });
 
   useEffect(() => {
     store.get("mySession").then((res: any) => {
