@@ -1,13 +1,16 @@
 import React from "react";
 import { CinemaLocationType } from "../type/CinemaLocationType";
+import store from "../../../config/storage/IonicStorage";
 
 type Props = {};
 
 const TicketBookingLocation = (props: Props) => {
   const [location, setLocation] = React.useState("Quan 1");
   const [cinemaLocation, setCinemaLocation] = React.useState("CGV Vincom");
+
   const locationRef = React.useRef<HTMLSelectElement>(null);
   const cinemaLocationRef = React.useRef<HTMLSelectElement>(null);
+
   const myDataLocation: CinemaLocationType[] = [
     {
       location: "Chọn Tỉnh/Thành Phố",
@@ -72,9 +75,12 @@ const TicketBookingLocation = (props: Props) => {
           className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={cinemaLocationRef}
           value={cinemaLocation}
-          onChange={(e) => {
-            setCinemaLocation(e.target.value);
-            console.log(cinemaLocation);
+          onChange={async (
+            e: React.ChangeEvent<HTMLSelectElement>
+          ): Promise<void> => {
+            await setCinemaLocation(e.target.value);
+            await console.log(cinemaLocation);
+            await store.set("ticket_location", cinemaLocation);
           }}
         ></select>
       </div>

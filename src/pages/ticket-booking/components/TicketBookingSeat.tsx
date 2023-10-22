@@ -1,4 +1,5 @@
 import React from "react";
+import store from "../../../config/storage/IonicStorage";
 
 type Props = {};
 
@@ -7,18 +8,27 @@ const TicketBookingSeat = (props: Props) => {
   const letter = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const number = [1, 2, 3, 4, 5, 6, 7, 8];
   const selectedSeat: string[] = [
-    "A1",
+    "A8",
     "A2",
-    "A3",
+    "G3",
     "A4",
     "A5",
     "B1",
-    "B2",
-    "B3",
-    "B4",
+    "C2",
+    "C3",
+    "D4",
     "B5",
   ];
   console.log(seat);
+
+  const handleOnClickProcessTicket = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
+    await console.log("alo");
+    try {
+      await store.get("ticket_location").then((res)=>{});
+    } catch (error) {}
+  };
   return (
     <div className="flex flex-col items-center justify-center">
       <p className="text-base mb-2">Select Seat</p>
@@ -57,51 +67,6 @@ const TicketBookingSeat = (props: Props) => {
       <p className="text-xs text-center text-white text-md font-bold block mb-4">
         Screen
       </p>
-
-      {/* seat section
-      <div className="w-full grid grid-cols-8 gap-y-4">
-        {
-          // render seat
-          letter.map((l, index) => {
-            return (
-              <div className="flex flex-wrap gap-1" key={index}>
-                {number.map((n, index) => {
-                  // check if seat is selected
-                  const isSelected = selectedSeat.includes(`${l}${n}`);
-                  console.log("isSelected", isSelected);
-                  return (
-                    // render check box in label tag
-                    <label key={index}>
-                      <input
-                        type="checkbox"
-                        className="hidden"
-                        checked={isSelected}
-                        onChange={() => {
-                          if (isSelected) {
-                            setSeat(seat.filter((item) => item !== `${l}${n}`));
-                          } else {
-                            setSeat([...seat, `${l}${n}`]);
-                          }
-                          console.log(seat);
-                        }}
-                      />
-                      <div
-                        className={`${
-                          isSelected ? "bg-red-500" : "bg-green-500"
-                        } w-6 h-6 rounded-md text-center text-white font-bold`}
-                      >
-                        {l}
-                        {n}
-                      </div>
-                    </label>
-                  );
-                })}
-              </div>
-            );
-          })
-        }
-      </div> */}
-
       {/*Seat selection test*/}
       <div className="w-full items-center justify-items-center grid grid-cols-10 gap-1">
         {/*Seat horizontal label*/}
@@ -112,7 +77,7 @@ const TicketBookingSeat = (props: Props) => {
         </div>
         {/*Seat select*/}
         {number.map((l, index) => (
-          <div className="w-full flex flex-col items-center">
+          <div className="w-full flex flex-col items-center" key={index}>
             {letter.map((n, index1) => {
               const isSelected = selectedSeat.includes(`${n}${l}`);
               return (
@@ -183,7 +148,10 @@ const TicketBookingSeat = (props: Props) => {
       </div>
 
       {/*Button Process */}
-      <button className="w-full bg-rose-500 font-semibold p-2.5 mb-4 rounded-md active:scale-90 transition-all duration-300 ease-in-out">
+      <button
+        className="w-full bg-rose-500 font-semibold p-2.5 mb-4 rounded-md active:scale-90 transition-all duration-300 ease-in-out"
+        onClick={handleOnClickProcessTicket}
+      >
         Process
       </button>
     </div>

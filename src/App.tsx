@@ -100,7 +100,7 @@ const App = () => {
               exact={true}
             />
             <Route exact path="/">
-              {mySession.access_token ? <Redirect to="/home" /> : <LoginPage />}
+              {mySession ? <Redirect to="/home" /> : <LoginPage />}
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>
