@@ -2,27 +2,53 @@ import React from "react";
 import { BsStarFill } from "react-icons/bs";
 import { BsStarHalf } from "react-icons/bs";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { DeleteFavourite } from "../../../services/wishlist/DeleteWishList";
+import toast from "react-hot-toast";
 
-type Props = {};
+interface WishListComponent {
+  id: any;
+  title: any;
+  genre: any;
+  rating: any;
+  duration: any;
+  release: any;
+  thumbnail: any;
+  handleReRender: any;
+}
 
-const WishListItems = (props: Props) => {
-  const rating = 4.5;
-  const title = "Người nhện đường về nhà là vào tim ta.";
+const WishListItems: React.FC<WishListComponent> = ({
+  id,
+  title,
+  genre,
+  rating,
+  duration,
+  release,
+  thumbnail,
+  handleReRender,
+}) => {
+  const handleDelete = () => {
+    DeleteFavourite(id)
+      .then((res) => {
+        toast.success("Delete successfully!");
+        handleReRender();
+      })
+      .catch((error) => {
+        toast.error("Delete failed!");
+      });
+  };
   console.log(title.length);
   return (
     <div className="relative grid grid-cols-5 border border-slate-400 rounded-lg mb-4">
       <div className="col-span-2 m-4 ">
-        <img className="w-24 h-32 bg-slate-400"></img>
+        <img className="w-24 h-32 bg-slate-400" src={thumbnail}></img>
       </div>
-      <div className="col-span-3 my-4">
+      <div className="col-span-3 my-4 flex flex-col justify-between">
         <h1 className="text-base mb-1 font-semibold">
           {title.length < 35 ? title : title.substring(0, 35) + "..."}
         </h1>
-        <p className="text-xs text-slate-500 ">
-          Genre: Hành động, Siêu nhiên, Khoa học
-        </p>
-        <p className="text-xs text-slate-500 ">Release year: Tháng 10, 2021</p>
-        <p className="text-xs text-slate-500 ">Độ dài: 2h19p</p>
+        <p className="text-xs text-slate-500 ">Genre: {genre}</p>
+        <p className="text-xs text-slate-500 ">Release year: {release}</p>
+        <p className="text-xs text-slate-500 ">Độ dài: {duration}</p>
         <div className="flex ">
           <div className="flex items-center justify-center gap-1">
             {[...Array(Math.floor(Number(rating)))].map((item, index) => {
@@ -42,7 +68,10 @@ const WishListItems = (props: Props) => {
         </div>
       </div>
       <div className="absolute right-3 bottom-3">
-        <TrashIcon className="w-4 h-4 text-white" />
+        <TrashIcon
+          className="w-4 h-4 text-white transition-all active:scale-150 duration-300"
+          onClick={handleDelete}
+        />
       </div>
     </div>
   );
