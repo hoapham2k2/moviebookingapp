@@ -53,9 +53,9 @@ const TicketBookingLocation = (props: Props) => {
         <select
           className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={locationRef}
-          onChange={(e) => {
+          onChange={async (e) => {
             setLocation(e.target.value);
-            console.log(e.target.value);
+            await store.set("location", e.target.value);
           }}
           value={location}
         >
@@ -78,9 +78,9 @@ const TicketBookingLocation = (props: Props) => {
           onChange={async (
             e: React.ChangeEvent<HTMLSelectElement>
           ): Promise<void> => {
-            await setCinemaLocation(e.target.value);
-            await console.log(cinemaLocation);
-            await store.set("ticket_location", cinemaLocation);
+            setCinemaLocation(e.target.value);
+            console.log(e.target.value);
+            await store.set("cinema_location", e.target.value);
           }}
         ></select>
       </div>

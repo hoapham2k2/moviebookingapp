@@ -9,7 +9,8 @@ type Props = {
 };
 
 const MovieDetailRatingAndReviews = (props: Props) => {
-  const [rating, setRating] = React.useState<Number>(4.5);
+  const randomNumber = Math.floor(Math.random() * 5) + 1;
+  const [rating, setRating] = React.useState<Number>(randomNumber);
   return (
     <div className="w-full h-full overflow-y-auto">
       {/* Rating Section */}

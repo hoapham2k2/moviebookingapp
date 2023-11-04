@@ -20,14 +20,23 @@ const TicketBookingSeat = (props: Props) => {
     "B5",
   ];
   console.log(seat);
+  store.set("seat", seat);
 
   const handleOnClickProcessTicket = async (
     e: React.MouseEvent<HTMLButtonElement>
-  ): Promise<void> => {
-    await console.log("alo");
-    try {
-      await store.get("ticket_location").then((res)=>{});
-    } catch (error) {}
+  ) => {
+    //Data local here
+    const location = await store.get("location");
+    const cinemaLocation = await store.get("cinema_location");
+    const datetime = await store.get("date_booking");
+    const timebook = await store.get("time_booking");
+    const seatdata = await store.get("seat");
+    //Print for test
+    console.log(location);
+    console.log(cinemaLocation);
+    console.log(datetime);
+    console.log(timebook);
+    console.log(seatdata);
   };
   return (
     <div className="flex flex-col items-center justify-center">

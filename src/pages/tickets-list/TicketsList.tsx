@@ -69,11 +69,11 @@ const TicketsListPage = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className="fixed bottom-14 w-full flex">
+      {/* <div className="fixed bottom-14 w-full flex">
         <button className="w-full bg-rose-500 font-semibold p-2.5 mb-4 rounded-md active:scale-75 transition-all duration-300 ease-in-out my-2 mx-4">
           Process to Payment
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
