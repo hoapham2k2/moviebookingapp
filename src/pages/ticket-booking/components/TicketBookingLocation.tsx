@@ -5,11 +5,16 @@ import store from "../../../config/storage/IonicStorage";
 type Props = {};
 
 const TicketBookingLocation = (props: Props) => {
-  const [location, setLocation] = React.useState("Quan 1");
-  const [cinemaLocation, setCinemaLocation] = React.useState("CGV Vincom");
+  const [location, setLocation] = React.useState("Quận 1");
+  const [cinemaLocation, setCinemaLocation] = React.useState(
+    "CGV Vincom Đồng Khởi"
+  );
 
   const locationRef = React.useRef<HTMLSelectElement>(null);
   const cinemaLocationRef = React.useRef<HTMLSelectElement>(null);
+  console.log(cinemaLocation);
+  store.set("cinema_location", cinemaLocation);
+  store.set("location", location);
 
   const myDataLocation: CinemaLocationType[] = [
     {
@@ -38,9 +43,9 @@ const TicketBookingLocation = (props: Props) => {
     // mỗi lần location thay đổi thì load lại select tag của cinema
     cinemaLocationRef.current!.innerHTML = "";
     myDataLocation.forEach((item) => {
-      if (item.location === location) {
+      if (item.location == location) {
         item.listCinemas.forEach((item) => {
-          cinemaLocationRef.current!.innerHTML += `<option value=${item}>${item}</option>`;
+          cinemaLocationRef.current!.innerHTML += `<option value="${item.toString()}">${item}</option>`;
         });
       }
     });
@@ -53,7 +58,7 @@ const TicketBookingLocation = (props: Props) => {
         <select
           className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={locationRef}
-          onChange={(e) => {
+          onChange={async (e) => {
             setLocation(e.target.value);
             console.log(e.target.value);
           }}
@@ -78,9 +83,8 @@ const TicketBookingLocation = (props: Props) => {
           onChange={async (
             e: React.ChangeEvent<HTMLSelectElement>
           ): Promise<void> => {
-            await setCinemaLocation(e.target.value);
-            await console.log(cinemaLocation);
-            await store.set("ticket_location", cinemaLocation);
+            setCinemaLocation(e.target.value);
+            console.log(e.target.value);
           }}
         ></select>
       </div>

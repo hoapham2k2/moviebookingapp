@@ -1,9 +1,14 @@
 import { ArrowLeftIcon, TicketIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import { useHistory } from "react-router";
 
 type Props = {};
 
 const PaymentStatus = (props: Props) => {
+  const router = useHistory();
+  const handleBackMain = () => {
+    router.push("/home");
+  };
   const isSuccess = true;
   return (
     <div className="flex flex-col items-center justify-center">
@@ -22,11 +27,14 @@ const PaymentStatus = (props: Props) => {
           your e-mail
         </p>
         <div className="flex gap-4 mt-12 mb-12">
-          <button className=" bg-slate-900 mx-2 p-3 flex gap-2 rounded-lg font-semibold">
+          <button
+            className=" bg-slate-900 mx-2 p-3 flex gap-2 rounded-lg font-semibold transition-all active:scale-125 duration-300 ease-in-out"
+            onClick={handleBackMain}
+          >
             <ArrowLeftIcon className="w-6 h-6" />
             Main menu
           </button>
-          <button className="bg-slate-900 mx-2 p-3 flex gap-2 rounded-lg font-semibold">
+          <button className="bg-slate-900 mx-2 p-3 flex gap-2 rounded-lg font-semibold transition-all active:scale-125 duration-300 ease-in-out">
             <TicketIcon className="w-6 h-6" />
             View tickets
           </button>

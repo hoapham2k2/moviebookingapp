@@ -33,6 +33,8 @@ const PreviewSection = (props: Props) => {
     }
   }, []);
 
+  console.log(data);
+
   return (
     <div className="">
       <div className="div-full flex items-center justify-between">

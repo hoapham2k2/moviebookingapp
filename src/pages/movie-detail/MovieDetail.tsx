@@ -10,6 +10,7 @@ type Props = {};
 
 const MovieDetailPage = (appProps: Props) => {
   const [movieId, setmovieId] = React.useState<Number>(0);
+
   const [movieDetail, setMovieDetail] = React.useState<
     MovieGetDTO | null | undefined
   >(null);

@@ -7,6 +7,6 @@ begin
     -- select random 2 movies from tbl_movie (postgresql)
     select * from tbl_movie
     order by random()
-    limit 2;
+    limit 50;
 end;
 $function$;

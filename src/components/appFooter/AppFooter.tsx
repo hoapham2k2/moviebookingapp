@@ -41,7 +41,7 @@ const AppFooter = (props: Props) => {
             return (
               <div className="text-center" key={index}>
                 <NavLink
-                  activeClassName="text-blue-500"
+                  activeClassName="text-rose-400"
                   to={item.url}
                   className="flex flex-col items-center justify-center gap-2"
                 >

@@ -1,5 +1,7 @@
 import React from "react";
 import store from "../../../config/storage/IonicStorage";
+import toast from "react-hot-toast";
+import { useHistory } from "react-router";
 
 type Props = {};
 
@@ -20,14 +22,41 @@ const TicketBookingSeat = (props: Props) => {
     "B5",
   ];
   console.log(seat);
+  store.set("seat", seat);
 
+  const router = useHistory();
+
+  //Handle start process
   const handleOnClickProcessTicket = async (
     e: React.MouseEvent<HTMLButtonElement>
-  ): Promise<void> => {
-    await console.log("alo");
-    try {
-      await store.get("ticket_location").then((res)=>{});
-    } catch (error) {}
+  ) => {
+    //Data local here
+    const location = await store.get("location");
+    const cinemaLocation = await store.get("cinema_location");
+    const datetime = await store.get("date_booking");
+    const timebook = await store.get("time_booking");
+    const seatdata = await store.get("seat");
+    //Print for test
+    console.log(location);
+    console.log(cinemaLocation);
+    console.log(datetime);
+    console.log(timebook);
+    console.log(seatdata);
+    if (datetime == null) {
+      toast.error("Vui lòng chọn ngày xem", {
+        duration: 1000,
+      });
+    } else if (timebook == null) {
+      toast.error("Vui lòng chọn giờ xem!", {
+        duration: 1000,
+      });
+    } else if (seatdata.length == 0) {
+      toast.error("Bạn chưa chọn vị trí ghế!", {
+        duration: 1000,
+      });
+    } else {
+      router.push("/payment");
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center">

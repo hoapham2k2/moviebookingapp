@@ -4,12 +4,14 @@ import TicketBookingHeader from "./components/TicketBookingHeader";
 import TicketBookingLocation from "./components/TicketBookingLocation";
 import TicketBookingDateTime from "./components/TicketBookingDateTime";
 import TicketBookingSeat from "./components/TicketBookingSeat";
+import store from "../../config/storage/IonicStorage";
 
 type Props = {};
 
 const TicketBookingPage = (props: Props) => {
   const router = useHistory();
   const movieId = router.location.pathname.split("/")[3].split("=")[1];
+  store.set("movie_id_booking", movieId);
   console.log(movieId);
   return (
     <>
