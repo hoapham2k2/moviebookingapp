@@ -119,7 +119,7 @@ const HeaderSection = (props: Props) => {
           {/**Search Result */}
           {showResult && (
             <div className="absolute rounded-xl text-black bg-slate-300 border border-slate-400 w-full top-12 max-h-96 overflow-scroll">
-              {resut.map((item: any) => {
+              {resut.map((item: any, index: number) => {
                 return (
                   <SearchItem
                     title={item.title}
