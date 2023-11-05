@@ -1,5 +1,7 @@
 import React from "react";
 import store from "../../../config/storage/IonicStorage";
+import toast from "react-hot-toast";
+import { useHistory } from "react-router";
 
 type Props = {};
 
@@ -22,6 +24,9 @@ const TicketBookingSeat = (props: Props) => {
   console.log(seat);
   store.set("seat", seat);
 
+  const router = useHistory();
+
+  //Handle start process
   const handleOnClickProcessTicket = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -37,6 +42,21 @@ const TicketBookingSeat = (props: Props) => {
     console.log(datetime);
     console.log(timebook);
     console.log(seatdata);
+    if (datetime == null) {
+      toast.error("Vui lòng chọn ngày xem", {
+        duration: 1000,
+      });
+    } else if (timebook == null) {
+      toast.error("Vui lòng chọn giờ xem!", {
+        duration: 1000,
+      });
+    } else if (seatdata.length == 0) {
+      toast.error("Bạn chưa chọn vị trí ghế!", {
+        duration: 1000,
+      });
+    } else {
+      router.push("/payment");
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center">

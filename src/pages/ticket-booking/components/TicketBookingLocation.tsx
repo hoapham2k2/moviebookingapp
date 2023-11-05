@@ -10,6 +10,8 @@ const TicketBookingLocation = (props: Props) => {
 
   const locationRef = React.useRef<HTMLSelectElement>(null);
   const cinemaLocationRef = React.useRef<HTMLSelectElement>(null);
+  store.set("cinema_location", cinemaLocation);
+  store.set("location", location);
 
   const myDataLocation: CinemaLocationType[] = [
     {
@@ -55,7 +57,6 @@ const TicketBookingLocation = (props: Props) => {
           ref={locationRef}
           onChange={async (e) => {
             setLocation(e.target.value);
-            await store.set("location", e.target.value);
           }}
           value={location}
         >
@@ -80,7 +81,6 @@ const TicketBookingLocation = (props: Props) => {
           ): Promise<void> => {
             setCinemaLocation(e.target.value);
             console.log(e.target.value);
-            await store.set("cinema_location", e.target.value);
           }}
         ></select>
       </div>

@@ -9,4 +9,5 @@ export default class TicketGetDTO {
   cinema_location: string = "";
   booking_date: string = "";
   price: number = 0;
+  location: string = "";
 }
