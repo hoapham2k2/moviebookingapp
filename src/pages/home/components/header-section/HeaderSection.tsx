@@ -122,6 +122,7 @@ const HeaderSection = (props: Props) => {
               {resut.map((item: any, index: number) => {
                 return (
                   <SearchItem
+                    key={index}
                     title={item.title}
                     thumbnail={item.thumbnail}
                     duration={item.duration}
