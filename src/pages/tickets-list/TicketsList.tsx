@@ -11,7 +11,8 @@ const TicketsListPage = (props: Props) => {
   useEffect(() => {
     const GetTickets = async () => {
       const response = await GetAllCurrentTicket();
-      setTickets(response);
+      //to show the newest tickets first
+      setTickets(response?.reverse());
     };
     GetTickets();
   }, []);
