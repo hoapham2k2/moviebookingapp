@@ -11,14 +11,14 @@ const WishListPage = (props: Props) => {
   useEffect(() => {
     const getWishList = async () => {
       const resWishList = await GetWishList();
-      setWishList(resWishList!);
+      setWishList(resWishList?.reverse());
     };
     getWishList();
   }, []);
 
   const handleReRender = async () => {
     const resWishList = await GetWishList();
-    setWishList(resWishList!);
+    setWishList(resWishList?.reverse());
   };
 
   return (

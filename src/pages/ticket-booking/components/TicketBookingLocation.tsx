@@ -2,9 +2,13 @@ import React from "react";
 import { CinemaLocationType } from "../type/CinemaLocationType";
 import store from "../../../config/storage/IonicStorage";
 
-type Props = {};
+interface TicketBookingProps {
+  handleReRender: any;
+}
 
-const TicketBookingLocation = (props: Props) => {
+const TicketBookingLocation: React.FC<TicketBookingProps> = ({
+  handleReRender,
+}) => {
   const [location, setLocation] = React.useState("Quận 1");
   const [cinemaLocation, setCinemaLocation] = React.useState(
     "CGV Vincom Đồng Khởi"
@@ -61,6 +65,7 @@ const TicketBookingLocation = (props: Props) => {
           onChange={async (e) => {
             setLocation(e.target.value);
             console.log(e.target.value);
+            await handleReRender();
           }}
           value={location}
         >
@@ -85,6 +90,7 @@ const TicketBookingLocation = (props: Props) => {
           ): Promise<void> => {
             setCinemaLocation(e.target.value);
             console.log(e.target.value);
+            await handleReRender();
           }}
         ></select>
       </div>

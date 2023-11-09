@@ -14,13 +14,13 @@ const Payment = (props: Props) => {
   const [currentMovie, setCurrentMovie] = useState<any>(-1);
   const router = useHistory();
 
-  // useEffect(() => {
-  //   const getCurrentIdMovie = async () => {
-  //     const movieId = await store.get("movie_id_booking");
-  //     setCurrentMovie(movieId);
-  //   };
-  //   getCurrentIdMovie();
-  // }, []);
+  useEffect(() => {
+    const getCurrentIdMovie = async () => {
+      const movieId = await store.get("movie_id_booking");
+      setCurrentMovie(movieId);
+    };
+    getCurrentIdMovie();
+  }, []);
 
   const handlePayment = async () => {
     const movieId = await store.get("movie_id_booking");
@@ -33,15 +33,24 @@ const Payment = (props: Props) => {
     const ticket = new TicketGetDTO();
     ticket.movie_id = movieId;
     ticket.cinema_location = cinemaLocation;
-    //handle convert date
-    const dateBooking = new Date(datetime);
-    const formattedDate = dateBooking.toISOString().split("T")[0];
-    ticket.booking_date = formattedDate;
     ticket.booking_time = timebook;
     ticket.user_id = userInfor["id"];
     ticket.seat = seatdata.toString();
     ticket.location = location;
     ticket.price = 500 * seatdata.length;
+    //handle convert date
+    const dateBooking = new Date(datetime);
+
+    // Get the year, month, and day of the UTC date
+    const year = dateBooking.getUTCFullYear();
+    const month = dateBooking.getUTCMonth() + 1;
+    const day = dateBooking.getUTCDate() + 1;
+
+    // Format the date as 11-15-2023
+    const formattedDate = `${month}-${day}-${year}`;
+    console.log("formatted date:", formattedDate);
+
+    ticket.booking_date = formattedDate;
     await InsertTicket(ticket);
 
     router.push("/paymentStatus");
