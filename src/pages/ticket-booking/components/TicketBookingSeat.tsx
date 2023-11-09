@@ -2,26 +2,23 @@ import React from "react";
 import store from "../../../config/storage/IonicStorage";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router";
+import { GetSelectedSeat } from "../../../services/seat/GetSelectedSeat";
 
-type Props = {};
+interface TicketBookingSeatProps {
+  selectedSeat: any;
+}
 
-const TicketBookingSeat = (props: Props) => {
+const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
+  selectedSeat,
+}) => {
   const [seat, setSeat] = React.useState<string[]>([]);
   const letter = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const number = [1, 2, 3, 4, 5, 6, 7, 8];
-  const selectedSeat: string[] = [
-    "A8",
-    "A2",
-    "G3",
-    "A4",
-    "A5",
-    "B1",
-    "C2",
-    "C3",
-    "D4",
-    "B5",
-  ];
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   console.log(seat);
+  console.log(selectedSeat);
   store.set("seat", seat);
 
   const router = useHistory();
@@ -88,7 +85,6 @@ const TicketBookingSeat = (props: Props) => {
           Selected
         </div>
       </div>
-
       {/* screen section */}
       <div className="flex justify-center items-center w-full">
         <div className="relative screen bg-clip-padding bg-rose-400 h-12 w-2/3 rounded-t-full shadow-2xl shadow-slate-400 mb-8"></div>
@@ -96,60 +92,70 @@ const TicketBookingSeat = (props: Props) => {
       <p className="text-xs text-center text-white text-md font-bold block mb-4">
         Screen
       </p>
-      {/*Seat selection test*/}
-      <div className="w-full items-center justify-items-center grid grid-cols-10 gap-1">
-        {/*Seat horizontal label*/}
-        <div className="col-span-1">
-          {letter.map((l, index) => (
-            <div key={index}>{l}</div>
-          ))}
+      {/*Seat selection */}
+      {loading ? (
+        <div>
+          <a>Loading....</a>
         </div>
-        {/*Seat select*/}
-        {number.map((l, index) => (
-          <div className="w-full flex flex-col items-center" key={index}>
-            {letter.map((n, index1) => {
-              const isSelected = selectedSeat.includes(`${n}${l}`);
-              return (
-                <div className="row-span-1" key={(1 + index) * (1 + index1)}>
-                  <input
-                    type="checkbox"
-                    disabled={isSelected}
-                    className={`appearance-none custom-checkbox w-4 h-4  ${
-                      isSelected ? "bg-rose-500" : "bg-slate-700"
-                    } border border-slate-400`}
-                    value={`${n}${l}`}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      if (e.target.checked) {
-                        console.log(e.target.value);
-                        setSeat([...seat, e.target.value]);
-                      } else {
-                        setSeat(
-                          seat.filter((items) => items !== e.target.value)
-                        );
-                      }
-                    }}
-                  ></input>
-                </div>
-              );
-            })}
+      ) : (
+        <div className="w-full">
+          <div className="w-full items-center justify-items-center grid grid-cols-10 gap-1">
+            {/*Seat horizontal label*/}
+            <div className="col-span-1">
+              {letter.map((l, index) => (
+                <div key={index}>{l}</div>
+              ))}
+            </div>
+            {/*Seat select*/}
+            {number.map((l, index) => (
+              <div className="w-full flex flex-col items-center" key={index}>
+                {letter.map((n, index1) => {
+                  const isSelected = selectedSeat.includes(`${n}${l}`);
+                  return (
+                    <div
+                      className="row-span-1"
+                      key={(1 + index) * (1 + index1)}
+                    >
+                      <input
+                        type="checkbox"
+                        disabled={isSelected}
+                        className={`appearance-none custom-checkbox w-4 h-4  ${
+                          isSelected ? "bg-rose-500" : "bg-slate-700"
+                        } border border-slate-400`}
+                        value={`${n}${l}`}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          if (e.target.checked) {
+                            console.log(e.target.value);
+                            setSeat([...seat, e.target.value]);
+                          } else {
+                            setSeat(
+                              seat.filter((items) => items !== e.target.value)
+                            );
+                          }
+                        }}
+                      ></input>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+            {/*Seat horizontal label*/}
+            <div className="col-span-1">
+              {letter.map((l, index) => (
+                <div key={index}>{l}</div>
+              ))}
+            </div>
           </div>
-        ))}
-        {/*Seat horizontal label*/}
-        <div className="col-span-1">
-          {letter.map((l, index) => (
-            <div key={index}>{l}</div>
-          ))}
+          {/*Seat veritcal label*/}
+          <div className="grid grid-cols-10 w-full items-center justify-items-center">
+            <div className="col-span-1"></div>
+            {number.map((l, index) => (
+              <div key={index}>{l}</div>
+            ))}
+            <div className="col-span-1"></div>
+          </div>
         </div>
-      </div>
-      {/*Seat veritcal label*/}
-      <div className="grid grid-cols-10 w-full items-center justify-items-center">
-        <div className="col-span-1"></div>
-        {number.map((l, index) => (
-          <div key={index}>{l}</div>
-        ))}
-        <div className="col-span-1"></div>
-      </div>
-
+      )}
       {/* Sumarize seat & price */}
       <div className="grid grid-cols-12 items-center justify-items-center w-full my-4">
         <div className="col-span-2"></div>
@@ -175,7 +181,6 @@ const TicketBookingSeat = (props: Props) => {
         </div>
         <div className="col-span-2"></div>
       </div>
-
       {/*Button Process */}
       <button
         className="w-full bg-rose-500 font-semibold p-2.5 mb-4 rounded-md active:scale-90 transition-all duration-300 ease-in-out"

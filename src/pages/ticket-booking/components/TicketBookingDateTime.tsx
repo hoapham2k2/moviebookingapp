@@ -8,9 +8,12 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import store from "../../../config/storage/IonicStorage";
-type Props = {};
-
-const TicketBookingDateTime = (props: Props) => {
+interface TicketBookingProps {
+  handleReRender: any;
+}
+const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
+  handleReRender,
+}) => {
   const timeMap = [
     "10:00 AM",
     "11:00 AM",
@@ -20,11 +23,12 @@ const TicketBookingDateTime = (props: Props) => {
     "3:00 PM",
   ];
   const [selectedSlide, setSelectedSlide] = useState<number | null>(null);
-  const handleSlideClick: React.MouseEventHandler<HTMLElement> = (e) => {
+  const handleSlideClick: React.MouseEventHandler<HTMLElement> = async (e) => {
     const index = e.currentTarget.dataset.index;
     if (index) {
       console.log(index);
       setSelectedSlide(parseInt(index, 10));
+      await handleReRender();
     }
   };
   store.set("time_booking", timeMap[selectedSlide!]);
@@ -34,7 +38,7 @@ const TicketBookingDateTime = (props: Props) => {
         <div className="flex flex-col">
           <p className="text-base mb-1">Select a date</p>
           <MobileDatePicker
-            onChange={(
+            onChange={async (
               value: ChangeEvent<HTMLInputElement> | null | any,
               context: PickerChangeHandlerContext<DateValidationError>
             ) => {
@@ -46,6 +50,7 @@ const TicketBookingDateTime = (props: Props) => {
                   await store.set("date_booking", currentDate);
                 };
                 handleSaveLocal();
+                await handleReRender();
               }
             }}
             renderLoading={() => <p>Loading...</p>}
