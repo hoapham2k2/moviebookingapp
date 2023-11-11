@@ -41,7 +41,8 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
           <MobileDatePicker
             disablePast
             onChange={async (
-              value: ChangeEvent<HTMLInputElement> | null | any
+              value: any,
+              context: PickerChangeHandlerContext<DateValidationError>
             ) => {
               if (value) {
                 // Access the value within the ChangeEvent if it's not null
