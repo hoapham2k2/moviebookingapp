@@ -38,6 +38,7 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
         <div className="flex flex-col">
           <p className="text-base mb-1">Select a date</p>
           <MobileDatePicker
+		  	minDate={new Date()}
             onChange={async (
               value: ChangeEvent<HTMLInputElement> | null | any,
               context: PickerChangeHandlerContext<DateValidationError>
