@@ -22,16 +22,17 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
     "2:00 PM",
     "3:00 PM",
   ];
-  const [selectedSlide, setSelectedSlide] = useState<number | null>(null);
+  const [selectedSlide, setSelectedSlide] = useState<number | null>(0);
   const handleSlideClick: React.MouseEventHandler<HTMLElement> = async (e) => {
     const index = e.currentTarget.dataset.index;
     if (index) {
       console.log(index);
+      store.set("time_booking", timeMap[selectedSlide!]);
       setSelectedSlide(parseInt(index, 10));
       await handleReRender();
     }
   };
-  store.set("time_booking", timeMap[selectedSlide!]);
+
   return (
     <div>
       <div className="w-full h-full flex flex-col gap-4 text-white">
@@ -47,8 +48,8 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
                 // Access the value within the ChangeEvent if it's not null
                 const handleSaveLocal = async () => {
                   const currentDate = value.$d.toString();
-                  console.log(currentDate);
                   await store.set("date_booking", currentDate);
+                  console.log(currentDate);
                 };
                 handleSaveLocal();
                 await handleReRender();
