@@ -123,14 +123,36 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
                           isSelected ? "bg-rose-500" : "bg-slate-700"
                         } border border-slate-400`}
                         value={`${n}${l}`}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          if (e.target.checked) {
-                            console.log(e.target.value);
-                            setSeat([...seat, e.target.value]);
+                        onChange={async (
+                          e: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          const location = await store.get("location");
+                          const cinemaLocation = await store.get(
+                            "cinema_location"
+                          );
+                          const datetime = await store.get("date_booking");
+                          const timebook = await store.get("time_booking");
+
+                          if (
+                            location.toString() == "" ||
+                            cinemaLocation.toString() == "" ||
+                            datetime.toString() == "" ||
+                            timebook.toString() == ""
+                          ) {
+                            e.target.checked = false;
                           } else {
-                            setSeat(
-                              seat.filter((items) => items !== e.target.value)
-                            );
+                            console.log(location);
+                            console.log(cinemaLocation);
+                            console.log(datetime);
+                            console.log(timebook);
+                            if (e.target.checked) {
+                              console.log(e.target.value);
+                              setSeat([...seat, e.target.value]);
+                            } else {
+                              setSeat(
+                                seat.filter((items) => items !== e.target.value)
+                              );
+                            }
                           }
                         }}
                       ></input>

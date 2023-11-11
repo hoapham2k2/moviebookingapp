@@ -16,9 +16,6 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
 
   const locationRef = React.useRef<HTMLSelectElement>(null);
   const cinemaLocationRef = React.useRef<HTMLSelectElement>(null);
-  console.log(cinemaLocation);
-  store.set("cinema_location", cinemaLocation);
-  store.set("location", location);
 
   const myDataLocation: CinemaLocationType[] = [
     {
@@ -63,6 +60,7 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
           className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={locationRef}
           onChange={async (e) => {
+            await store.set("location", e.target.value);
             setLocation(e.target.value);
             console.log(e.target.value);
             await handleReRender();
@@ -88,6 +86,7 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
           onChange={async (
             e: React.ChangeEvent<HTMLSelectElement>
           ): Promise<void> => {
+            store.set("cinema_location", e.target.value);
             setCinemaLocation(e.target.value);
             console.log(e.target.value);
             await handleReRender();
