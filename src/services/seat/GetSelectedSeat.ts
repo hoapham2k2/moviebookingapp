@@ -33,9 +33,13 @@ export const GetSelectedSeat = async () => {
     .eq("booking_date", formattedDate)
     .eq("location", location);
 
-  await store.set(
-    "selected-seat",
-    data!.length > 0 ? data![0]["seat"].split(",") : []
-  );
-  return data!.length > 0 ? data![0]["seat"].split(",") : [];
+  var listResult: any = [];
+
+  if (data != null) {
+    for (let i = 0; i < data!.length; i++) {
+      listResult = listResult.concat(data![i]["seat"].split(","));
+    }
+  }
+  await store.set("selected-seat", listResult);
+  return listResult;
 };

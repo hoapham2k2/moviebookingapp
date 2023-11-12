@@ -10,8 +10,7 @@ import {
 import { logoutUser } from "../../services/authentication/Authentication";
 import store from "../../config/storage/IonicStorage";
 import { useHistory } from "react-router-dom";
-import UserGetDTO from "../../dtos/UserGetDTO";
-import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -20,36 +19,25 @@ const ProfilePage = (props: Props) => {
   const router = useHistory();
   const [myProfile, setMyProfile] = React.useState({});
 
+  const renderProfile = async () => {
+    console.log("start rendering");
+    const currentUsers = await store.get("myUser");
+    setMyProfile(currentUsers);
+  };
+
   React.useEffect(() => {
-    setIsLoading(true);
-    store
-      .get("myUser")
-      .then((res) => {
-        console.log("my user from profile", res);
-        setMyProfile({ ...res });
-      })
-      .then(() => {
-        console.log(myProfile);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    renderProfile();
   }, []);
 
   const handleLogOut = async () => {
-    setIsLoading(true);
+    console.log("start log out");
+    await store.clear();
     await logoutUser()
       .then(() => {
-        store.clear();
+        window.location.href = "/login";
       })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .then(() => {
-        alert("Log out successfully");
-      })
-      .then(() => {
-        router.push("/login");
+      .catch(() => {
+        toast.error("Log out failed");
       });
   };
 
@@ -113,14 +101,15 @@ const ProfilePage = (props: Props) => {
         </div>
         <div className="col-span-2"></div>
       </div>
-      <div className="w-full px-4 py-2 grid grid-cols-2 active:scale-90 transition-all duration-300 ease-in-out">
+      <div
+        className="w-full px-4 py-2 grid grid-cols-2 active:scale-90 transition-all duration-300 ease-in-out"
+        onClick={handleLogOut}
+      >
         <div className="col-span-2 flex p-2 rounded-lg border border-slate-600 bg-slate-950 ">
           <div className="relative flex ">
             <ArrowRightOnRectangleIcon className="w-6 h-6 mr-1" />
           </div>
-          <p className="text-lg" onClick={handleLogOut}>
-            Log out
-          </p>
+          <p className="text-lg">Log out</p>
         </div>
         <div className="col-span-2"></div>
       </div>
