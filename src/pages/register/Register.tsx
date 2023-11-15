@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
 import RegisterGetDTO from "../../dtos/RegisterGetDTO";
 import RegisterPostDTO from "../../dtos/RegisterPostDTO";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -21,25 +22,14 @@ const RegisterPage = (props: Props) => {
     setIsLoading(true);
     await registerUser(data)
       .then(async (res) => {
-        console.log("Register Success");
-        await setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-        await alert("ddang ky thanh cong");
-        await router.push("/login");
+        toast.success("Đăng ký thành công");
+        router.push("/login");
       })
-
       .catch((err) => {
-        console.log("Register Failed");
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-        alert("dang ky that bai");
+        toast.error("Đăng ký thất bại");
       })
       .finally(() => {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
+        setIsLoading(false);
       });
   };
   return (

@@ -14,6 +14,11 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
     "CGV Vincom Đồng Khởi"
   );
 
+  const setInitialValue = async () => {
+    await store.set("location", location);
+    await store.set("cinema_location", cinemaLocation);
+  };
+
   const locationRef = React.useRef<HTMLSelectElement>(null);
   const cinemaLocationRef = React.useRef<HTMLSelectElement>(null);
 
@@ -50,6 +55,7 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
         });
       }
     });
+    setInitialValue();
   }, [location]);
 
   return (

@@ -1,10 +1,11 @@
 import React, { ChangeEvent } from "react";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BiSearchAlt2 } from "react-icons/bi";
-import { IoFilterOutline, IoReloadCircle } from "react-icons/io5";
+import { IoReloadCircle } from "react-icons/io5";
 import store from "../../../../config/storage/IonicStorage";
 import SearchMovie from "../../../../services/searchMovie/SearchMovie";
 import { Link } from "react-router-dom";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 
 type Props = {};
 
@@ -115,22 +116,36 @@ const HeaderSection = (props: Props) => {
             {isSearching && (
               <IoReloadCircle className="w-6 h-6 transition-all animate-spin duration-500 mr-4" />
             )}
+            {showResult && (
+              <XCircleIcon
+                className="w-6 h-6 mr-4"
+                onClick={() => {
+                  setShowResult(false);
+                }}
+              />
+            )}
             {/**Search Result */}
             {showResult && (
-              <div className="absolute rounded-xl text-black bg-slate-300 border border-slate-400 w-full top-12 max-h-96 overflow-scroll">
-                {resut.map((item: any, index: number) => {
-                  return (
-                    <SearchItem
-                      key={index}
-                      id={item.id}
-                      title={item.title}
-                      thumbnail={item.thumbnail}
-                      duration={item.duration}
-                      language={item.country}
-                      genre={item.category}
-                    />
-                  );
-                })}
+              <div className="absolute top-12 bg-slate-300 border-hidden rounded-xl w-full">
+                <div className="h-2"></div>
+                <div className="grid text-black rounded-t-xl bg-slate-300 border-transparent overflow-scroll ">
+                  <div className="max-h-96 w-full ">
+                    {resut.map((item: any, index: number) => {
+                      return (
+                        <SearchItem
+                          key={index}
+                          id={item.id}
+                          title={item.title}
+                          thumbnail={item.thumbnail}
+                          duration={item.duration}
+                          language={item.country}
+                          genre={item.category}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="h-6"></div>
               </div>
             )}
           </div>
@@ -162,18 +177,18 @@ const SearchItem: React.FC<SearchItemComponent> = ({
   return (
     <Link to={`/home/${id}`}>
       <div
-        className="flex px-4 py-2 gap-4 items-center "
+        className="grid grid-cols-3 px-4 pb-2 gap-4 items-start "
         onClick={() => {
           console.log(id);
         }}
       >
-        <div>
+        <div className="col-span-1">
           <img src={thumbnail} className="w-20 h-auto"></img>
         </div>
-        <div className="flex flex-col justify-between">
+        <div className=" col-span-2 flex flex-col justify-between">
           <p className="text-base font-bold">{title}</p>
           <div>
-            <p className="text-xs ">Thời lượng: {duration}</p>
+            <p className="text-xs">Thời lượng: {duration}</p>
             <p className="text-xs">Ngôn ngữ: {language}</p>
             <p className="text-xs">Thể loại: {genre}</p>
           </div>

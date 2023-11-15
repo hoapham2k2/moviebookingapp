@@ -22,6 +22,10 @@ const TicketBookingPage = (props: Props) => {
     setSelectedSeat(seatChoosen);
   };
 
+  useEffect(() => {
+    handleReRender();
+  }, []);
+
   console.log("re-render selectedSeat: ", selectedSeat);
 
   return (
