@@ -40,29 +40,21 @@ export const registerUser = async (mydata: RegisterPostDTO): Promise<any> => {
       },
     });
 
-    // const registerData = { ...data };
+    console.log("data after sign up success:", data);
 
-    // if (registerData) {
-    //   try {
-    //     const { data, error } = await supabase.from("tbl_user").insert([
-    //       {
-    //         id: registerData.user?.id,
-    //         first_name: mydata.firstName,
-    //         last_name: mydata.lastName,
-    //         phone_number: mydata.phone,
-    //         email: mydata.email,
-    //       },
-    //     ]);
-
-    //     if (data) return data;
-    //     if (error) throw error;
-    //   } catch (error) {
-    //     console.log("Add user to database error: ", error);
-    //     throw error;
-    //   }
-    // }
-    if (error) {
-      throw error;
+    if (data) {
+      await supabase
+        .from("tbl_user")
+        .insert([
+          {
+            id: data.user!.id,
+            first_name: data.user?.user_metadata.firstName,
+            last_name: data.user?.user_metadata.lastName,
+            email: mydata.email,
+            phone_number: mydata.phone,
+          },
+        ])
+        .select();
     }
 
     console.log("Register success");

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 import {
   DateValidationError,
   MobileDatePicker,
@@ -23,11 +23,12 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
     "3:00 PM",
   ];
   const [selectedSlide, setSelectedSlide] = useState<number | null>(0);
+
   const handleSlideClick: React.MouseEventHandler<HTMLElement> = async (e) => {
     const index = e.currentTarget.dataset.index;
     if (index) {
       console.log(index);
-      store.set("time_booking", timeMap[selectedSlide!]);
+      store.set("time_booking", timeMap[parseInt(index)]);
       setSelectedSlide(parseInt(index, 10));
       await handleReRender();
     }
@@ -40,6 +41,7 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
           <p className="text-base mb-1">Select a date</p>
           <MobileDatePicker
             disablePast
+            defaultValue={dayjs()}
             onChange={async (
               value: any,
               context: PickerChangeHandlerContext<DateValidationError>

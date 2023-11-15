@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import store from "../../../config/storage/IonicStorage";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router";
@@ -19,7 +19,9 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
 
   console.log(seat);
   console.log(selectedSeat);
-  store.set("seat", seat);
+  const resetSeat = async () => {
+    await store.set("seat", []);
+  };
 
   const router = useHistory();
 
@@ -55,6 +57,11 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
       router.push("/payment");
     }
   };
+
+  useEffect(() => {
+    resetSeat();
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center">
       <p className="text-base mb-2">Select Seat</p>
@@ -119,6 +126,7 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
                       <input
                         type="checkbox"
                         disabled={isSelected}
+                        defaultChecked={false}
                         className={`appearance-none custom-checkbox w-4 h-4  ${
                           isSelected ? "bg-rose-500" : "bg-slate-700"
                         } border border-slate-400`}
@@ -134,10 +142,10 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
                           const timebook = await store.get("time_booking");
 
                           if (
-                            location.toString() == "" ||
-                            cinemaLocation.toString() == "" ||
-                            datetime.toString() == "" ||
-                            timebook.toString() == ""
+                            location == null ||
+                            cinemaLocation == null ||
+                            datetime == null ||
+                            timebook == null
                           ) {
                             e.target.checked = false;
                           } else {
@@ -146,9 +154,17 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
                             console.log(datetime);
                             console.log(timebook);
                             if (e.target.checked) {
-                              console.log(e.target.value);
+                              await store.set("seat", [
+                                ...seat,
+                                e.target.value,
+                              ]);
+
                               setSeat([...seat, e.target.value]);
                             } else {
+                              await store.set(
+                                "seat",
+                                seat.filter((items) => items !== e.target.value)
+                              );
                               setSeat(
                                 seat.filter((items) => items !== e.target.value)
                               );

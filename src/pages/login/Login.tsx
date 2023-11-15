@@ -6,6 +6,7 @@ import { loginUser } from "../../services/authentication/Authentication";
 import store from "../../config/storage/IonicStorage";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -29,16 +30,16 @@ const LoginPage = (props: Props) => {
         store.set("myUser", res.user);
       })
       .then(() => {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
+        setIsLoading(false);
       })
       .then(() => {
         router.push("/home");
       })
       .catch((err) => {
-        alert("Something wrong while login");
-        console.log(err);
+        toast.error("Username or password failed");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -93,6 +94,5 @@ const LoginPage = (props: Props) => {
     </div>
   );
 };
-
 
 export default LoginPage;
