@@ -10,6 +10,7 @@ type Props = {
 const BookTicketModal = (props: Props) => {
   const handleInitialStore = async () => {
     await store.set("time_booking", "10:00 AM");
+    await store.set("date_booking", "11/15/2023");
   };
   return (
     <div

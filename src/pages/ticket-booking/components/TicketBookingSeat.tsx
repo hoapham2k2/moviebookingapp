@@ -140,6 +140,10 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
                           );
                           const datetime = await store.get("date_booking");
                           const timebook = await store.get("time_booking");
+                          console.log(location);
+                          console.log(cinemaLocation);
+                          console.log(datetime);
+                          console.log(timebook);
 
                           if (
                             location == null ||
