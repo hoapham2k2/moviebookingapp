@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 type Props = {};
 
 const RegisterPage = (props: Props) => {
+  const{check,setCheck} = React.useState<boolean>(true)
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     register,
@@ -17,7 +18,9 @@ const RegisterPage = (props: Props) => {
     formState: { errors },
   } = useForm<RegisterPostDTO>();
   const router = useHistory();
-
+  const handleCheck = () =>{
+    setCheck(false)
+  }
   const handleOnSubmit = async (data: RegisterPostDTO): Promise<void> => {
     setIsLoading(true);
     await registerUser(data)

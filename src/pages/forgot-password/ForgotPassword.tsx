@@ -4,6 +4,7 @@ import { forgotPassword } from "../../services/authentication/Authentication";
 type Props = {};
 
 const ForgotPasswordPage = (props: Props) => {
+  const{check,setCheck} = React.useState<boolean>(false)
   const [email, setEmail] = React.useState<string>("");
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +18,9 @@ const ForgotPasswordPage = (props: Props) => {
         alert("Email is not exist");
       });
   };
+  const handleCheck = () =>{
+    setCheck(true)
+  }
   return (
     <div className="w-full h-full">
       <div className="h-20 px-4 py-8 flex justify-start items-center">
