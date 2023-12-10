@@ -19,7 +19,8 @@ const ForgotPasswordPage = (props: Props) => {
       });
   };
   const handleCheck = () =>{
-    setCheck(true)
+    (check)?console.log(check):console.log(check)
+    setCheck(true);
   }
   return (
     <div className="w-full h-full">

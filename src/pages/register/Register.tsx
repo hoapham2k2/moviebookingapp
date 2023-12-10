@@ -6,11 +6,11 @@ import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
 import RegisterGetDTO from "../../dtos/RegisterGetDTO";
 import RegisterPostDTO from "../../dtos/RegisterPostDTO";
 import toast from "react-hot-toast";
+import LoginRequestDTO from "../../dtos/LoginRequestDTO";
 
 type Props = {};
 
 const RegisterPage = (props: Props) => {
-  const{check,setCheck} = React.useState<boolean>(true)
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const {
     register,
@@ -19,7 +19,7 @@ const RegisterPage = (props: Props) => {
   } = useForm<RegisterPostDTO>();
   const router = useHistory();
   const handleCheck = () =>{
-    setCheck(false)
+    (isLoading)?console.log(isLoading):console.log(isLoading)
   }
   const handleOnSubmit = async (data: RegisterPostDTO): Promise<void> => {
     setIsLoading(true);
