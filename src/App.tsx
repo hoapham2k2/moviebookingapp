@@ -41,6 +41,7 @@ import MuiProvider from "./providers/MuiProvider";
 import Payment from "./pages/payments/Payment";
 import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
 import ReactGA from "react-ga4";
+import CheckIndex from "./pages/check-index/check-index";
 
 setupIonicReact();
 
