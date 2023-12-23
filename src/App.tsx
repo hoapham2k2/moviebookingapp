@@ -41,7 +41,7 @@ import MuiProvider from "./providers/MuiProvider";
 import Payment from "./pages/payments/Payment";
 import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
 import ReactGA from "react-ga4";
-
+import ApiListener from "./components/apiListener/ApiListener";
 setupIonicReact();
 
 const App = () => {
@@ -64,6 +64,7 @@ const App = () => {
     <MuiProvider>
       <IonApp>
         <IonReactRouter>
+          <ApiListener />
           <IonRouterOutlet>
             <AppLayout>
               <Route path={"/home"} component={() => <Home />} exact={true} />

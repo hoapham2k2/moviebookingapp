@@ -1,8 +1,8 @@
 import supabase from "../../config/supabase/supabase";
 import TicketGetDTO from "../../dtos/TicketGetDTO";
 
-//create a function with input value is movieId to insert data
-export const InsertTicket = async (ticket: TicketGetDTO) => {
+//create a function with input value is movieId to insert data, then return ticketId to store
+export const InsertTicket = async (ticket: TicketGetDTO) : Promise<any> => {
   console.log(ticket);
   const { data, error } = await supabase
     .from("tbl_ticket")
@@ -19,4 +19,11 @@ export const InsertTicket = async (ticket: TicketGetDTO) => {
       },
     ])
     .select();
-};
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+  console.log(data);
+  return data;
+}

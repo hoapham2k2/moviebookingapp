@@ -51,7 +51,14 @@ const Payment = (props: Props) => {
     console.log("formatted date:", formattedDate);
 
     ticket.booking_date = formattedDate;
-    await InsertTicket(ticket);
+    // await InsertTicket(ticket);
+
+    const ticketId = await InsertTicket(ticket);
+    await store.set("ticket_id", ticketId[0]["id"]);
+
+    alert("Payment successfull with ticket id:  " + ticketId[0]["id"]);
+
+    // get ticket id to store
 
     router.push("/paymentStatus");
   };
