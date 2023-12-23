@@ -1,31 +1,23 @@
 import React from "react";
-import { forgotPassword } from "../../services/authentication/Authentication";
 
 type Props = {};
 
-const ForgotPasswordPage = (props: Props) => {
+const CheckIndex = (props: Props) => {
   const{check,setCheck} = React.useState<boolean>(false)
   const [email, setEmail] = React.useState<string>("");
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await forgotPassword(email)
-      .then((res) => {
-        console.log(res);
-        alert("Please check your email to reset password");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Email is not exist");
-      });
+    console.log(email);
+    if(check)
+      console.log("Index is true")
   };
   const handleCheck = () =>{
-    (check)?console.log(check):console.log(check)
-    setCheck(true);
+    setCheck(true)
   }
   return (
     <div className="w-full h-full">
       <div className="h-20 px-4 py-8 flex justify-start items-center">
-        <h1 className="text-xl uppercase font-semibold">Forgot Password</h1>
+        <h1 className="text-xl uppercase font-semibold">Check Index</h1>
       </div>
       <div className="w-full h-full  flex justify-center items-center">
         <form
@@ -50,4 +42,4 @@ const ForgotPasswordPage = (props: Props) => {
   );
 };
 
-export default ForgotPasswordPage;
+export default CheckIndex;
