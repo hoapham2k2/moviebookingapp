@@ -6,6 +6,7 @@ import store from "../../../../config/storage/IonicStorage";
 import SearchMovie from "../../../../services/searchMovie/SearchMovie";
 import { Link } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/24/solid";
+import { CURRENT_USER } from "../../../../utils/SharedValues";
 
 type Props = {};
 
@@ -42,7 +43,7 @@ const HeaderSection = (props: Props) => {
 
   React.useEffect(() => {
     store
-      .get("myUser")
+      .get(CURRENT_USER)
       .then((res) => {
         console.log("my user from profile", res);
         setMyProfile({ ...res });

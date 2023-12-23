@@ -27,7 +27,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import AppLayout from "./layout/AppLayout";
-import LoginPage from "./pages/login/Login";
+import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/Register";
 import { useEffect, useState } from "react";
 import store from "./config/storage/IonicStorage";
@@ -42,7 +42,8 @@ import Payment from "./pages/payments/Payment";
 import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
 import ReactGA from "react-ga4";
 import ApiListener from "./components/apiListener/ApiListener";
-
+import PrivateRoutesWrapper from "./routes/PrivateRoutesWrapper";
+import { ROUTES } from "./utils/SharedValues";
 
 setupIonicReact();
 
@@ -66,36 +67,64 @@ const App = () => {
     <MuiProvider>
       <IonApp>
         <IonReactRouter>
-          <ApiListener />
           <IonRouterOutlet>
             <AppLayout>
-              <Route path={"/home"} component={() => <Home />} exact={true} />
               <Route
-                path={"/tickets-list"}
-                component={() => <TicketsListPage />}
+                path={ROUTES.HOME}
+                component={() => (
+                  <PrivateRoutesWrapper route={ROUTES.HOME}>
+                    <Home />
+                  </PrivateRoutesWrapper>
+                )}
                 exact={true}
               />
               <Route
-                path={"/wishlist"}
-                component={() => <WishListPage />}
+                path={ROUTES.TICKETS_LIST}
+                component={() => (
+                  <PrivateRoutesWrapper route={ROUTES.TICKETS_LIST}>
+                    <TicketsListPage />
+                  </PrivateRoutesWrapper>
+                )}
                 exact={true}
               />
               <Route
-                path={"/profile"}
-                component={() => <ProfilePage />}
+                path={ROUTES.WISH_LIST}
+                component={() => (
+                  <PrivateRoutesWrapper route={ROUTES.WISH_LIST}>
+                    <WishListPage />
+                  </PrivateRoutesWrapper>
+                )}
                 exact={true}
               />
               <Route
-                path={"/home/:id"}
-                component={() => <MovieDetailPage />}
+                path={ROUTES.PROFILE}
+                component={() => (
+                  <PrivateRoutesWrapper route={ROUTES.PROFILE}>
+                    <ProfilePage />
+                  </PrivateRoutesWrapper>
+                )}
                 exact={true}
               />
               <Route
-                path={"/home/ticket/movieId=:id"}
-                component={() => <TicketBookingPage />}
+                path={ROUTES.HOME_DETAIL}
+                component={() => (
+                  <PrivateRoutesWrapper route={ROUTES.HOME_DETAIL}>
+                    <MovieDetailPage />
+                  </PrivateRoutesWrapper>
+                )}
+                exact={true}
+              />
+              <Route
+                path={ROUTES.TICKET_DETAIL}
+                component={() => (
+                  <PrivateRoutesWrapper route={ROUTES.TICKET_DETAIL}>
+                    <TicketBookingPage />
+                  </PrivateRoutesWrapper>
+                )}
                 exact={true}
               />
             </AppLayout>
+                  
             <Route path="/page/:name" component={AppLayout} exact={true} />
             <Route path="/login" component={LoginPage} exact={true} />
             <Route path="/register" component={RegisterPage} exact={true} />
