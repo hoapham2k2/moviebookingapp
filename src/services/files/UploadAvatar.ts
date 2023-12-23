@@ -1,8 +1,4 @@
-import toast from "react-hot-toast";
-import { StorageGetItem } from "../../config/storage/IonicStorage";
 import supabase from "../../config/supabase/supabase";
-import { CURRENT_USER } from "../../utils/SharedValues";
-import { boolean } from "yargs";
 import GetUserID from "../../utils/GetUserID";
 import React from "react";
 
@@ -18,6 +14,7 @@ export default async function UploadAvatar(
       contentType: "image/png", // server will infer the content type
     });
 
+<<<<<<< HEAD
   if (error) {
     toast.error("update avatar failed");
     throw error;
@@ -31,5 +28,16 @@ export default async function UploadAvatar(
       changeImgSrc(data.data.publicUrl);
       toast.success("update avatar success");
     }
+=======
+  try {
+  const res = await supabase.storage
+      .from("avatars")
+      .upload(user, file,{upsert:true})
+        
+  return `https://wujwdhzvyjbytquaahdd.supabase.co/storage/v1/object/public/avatars/${res.data?.path}`;
+    
+  } catch (err: any) {
+    console.log("error when upload avatar: ", err.message);
+>>>>>>> main
   }
 }
