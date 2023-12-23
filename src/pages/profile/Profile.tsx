@@ -11,6 +11,7 @@ import { logoutUser } from "../../services/authentication/Authentication";
 import store from "../../config/storage/IonicStorage";
 import { useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
+import { CURRENT_USER } from "../../utils/SharedValues";
 
 type Props = {};
 
@@ -21,7 +22,7 @@ const ProfilePage = (props: Props) => {
 
   const renderProfile = async () => {
     console.log("start rendering");
-    const currentUsers = await store.get("myUser");
+    const currentUsers = await store.get(CURRENT_USER);
     setMyProfile(currentUsers);
   };
 

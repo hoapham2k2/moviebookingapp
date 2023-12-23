@@ -7,6 +7,7 @@ import store from "../../config/storage/IonicStorage";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
 import toast from "react-hot-toast";
+import { CURRENT_USER } from "../../utils/SharedValues";
 
 type Props = {};
 
@@ -27,7 +28,7 @@ const LoginPage = (props: Props) => {
       .then((res) => {
         console.log("login respone: ", res);
         store.set("mySession", res.session);
-        store.set("myUser", res.user);
+        store.set(CURRENT_USER, res.user);
       })
       .then(() => {
         setIsLoading(false);
