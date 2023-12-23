@@ -3,6 +3,12 @@ import { useHistory } from "react-router-dom";
 import { App, URLOpenListenerEvent } from "@capacitor/app";
 type Props = {};
 
+
+///summary
+/// This component is used to listen to the deeplink
+///summary
+
+
 const ApiListener: React.FC<Props> = (props: Props) => {
   let history = useHistory();
   useEffect(() => {
