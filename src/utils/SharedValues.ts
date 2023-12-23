@@ -8,4 +8,7 @@ const ROUTES = {
   TICKET_DETAIL: "/home/ticket/movieId=:id",
 };
 
+
+
+
 export { CURRENT_USER, ROUTES };
