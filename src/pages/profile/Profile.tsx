@@ -13,6 +13,8 @@ import { useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
 import { CURRENT_USER } from "../../utils/SharedValues";
 import ItemOptions from "./components/ItemOptions";
+import supabase from "../../config/supabase/supabase";
+import GetUserID from "../../utils/GetUserID";
 
 type Props = {};
 
@@ -20,7 +22,6 @@ const ProfilePage = (props: Props) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useHistory();
   const [myProfile, setMyProfile] = React.useState({});
-  const avatarRef = React.useRef<HTMLImageElement>(null);
   const renderProfile = async () => {
     console.log("start rendering");
     const currentUsers = await store.get(CURRENT_USER);
@@ -53,15 +54,45 @@ const ProfilePage = (props: Props) => {
       icon: <ArrowRightOnRectangleIcon className="w-6 h-6 mr-1" />,
     },
   ];
+  const [imageSrc, setImageSrc] = React.useState<string>(
+    "https://wujwdhzvyjbytquaahdd.supabase.co/storage/v1/object/public/avatars/avatar_original.jpg"
+  );
+
+  React.useEffect(() => {
+    const renderAvatar = async () => {
+      const user = await GetUserID();
+      const { data, error } = await supabase.storage.from("avatars").list("", {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name", order: "asc" },
+        search: user,
+      });
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        if (data.length > 0) {
+          setImageSrc(
+            "https://wujwdhzvyjbytquaahdd.supabase.co/storage/v1/object/public/avatars/" +
+              data[0].name
+          );
+        }
+      }
+    };
+    renderAvatar();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center ">
       <div className="flex flex-col mt-12 justify-center items-center mb-10">
         <img
-          src="https://cdn.sforum.vn/sforum/wp-content/uploads/2021/07/lol-t1-1.jpg"
+          src={imageSrc}
           className="bg-slate-700 border rounded-full w-28 h-28 object-cover"
           alt="avatar"
-          ref={avatarRef}
+          onClick={() => {
+            const avatar = document.getElementById("avatar");
+            avatar?.click();
+          }}
         />
         <h1 className="text-lg mt-4">
           {
@@ -79,7 +110,7 @@ const ProfilePage = (props: Props) => {
           }
         </h1>
       </div>
-      <>
+      <div>
         {PROFILE_OPTIONS.map((item, index) => {
           return (
             <div
@@ -90,12 +121,12 @@ const ProfilePage = (props: Props) => {
                 displayName={item.displayName}
                 icon={item.icon}
                 index={index}
-                imgRef={avatarRef}
+                changeImgSrc={setImageSrc}
               />
             </div>
           );
         })}
-      </>
+      </div>
     </div>
   );
 };
