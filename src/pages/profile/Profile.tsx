@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowRightCircleIcon,
   ArrowRightOnRectangleIcon,
@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
 import { CURRENT_USER } from "../../utils/SharedValues";
 import ItemOptions from "./components/ItemOptions";
+import UploadAvatar from "../../services/files/UploadAvatar";
 
 type Props = {};
 
@@ -53,16 +54,32 @@ const ProfilePage = (props: Props) => {
       icon: <ArrowRightOnRectangleIcon className="w-6 h-6 mr-1" />,
     },
   ];
+  const [currentImage, setCurrentImg] = useState<string>();
 
+
+
+  console.log("image after change is: ",currentImage);
   return (
     <div className="flex flex-col items-center justify-center ">
       <div className="flex flex-col mt-12 justify-center items-center mb-10">
-        <img
-          src="https://cdn.sforum.vn/sforum/wp-content/uploads/2021/07/lol-t1-1.jpg"
-          className="bg-slate-700 border rounded-full w-28 h-28 object-cover"
-          alt="avatar"
-          ref={avatarRef}
-        />
+        <div className=" mt-12 justify-center items-center mb-10 relative">
+          <img
+              src={currentImage}
+              className="bg-slate-700 border rounded-full w-28 h-28 object-cover"
+              alt="avatar" 
+                     
+            />
+             <input className="absolute inset-0 opacity-0 cursor-pointer"
+           onChange={async (e) => {
+            // @ts-ignore
+            const file = e.target.files[0];
+            await UploadAvatar(file).then((res) => {
+              setCurrentImg(res);
+            });
+          }}
+          type="file"
+          />
+        </div>
         <h1 className="text-lg mt-4">
           {
             //@ts-ignore
@@ -92,7 +109,7 @@ const ProfilePage = (props: Props) => {
                 index={index}
                 imgRef={avatarRef}
               />
-            </div>
+          </div>
           );
         })}
       </>
