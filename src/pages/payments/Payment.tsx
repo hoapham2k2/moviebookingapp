@@ -57,7 +57,6 @@ const Payment = (props: Props) => {
     await store.set("ticket_id", ticketId[0]["id"]);
 
     alert("Payment successfull with ticket id:  " + ticketId[0]["id"]);
-
     // get ticket id to store
 
     router.push("/paymentStatus");

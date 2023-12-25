@@ -12,6 +12,7 @@ type Props = {
   icon: React.ReactNode;
   index: number;
   changeImgSrc?: React.Dispatch<React.SetStateAction<string>>;
+  setUpload?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ItemOptions = (props: Props) => {
@@ -55,16 +56,22 @@ const ItemOptions = (props: Props) => {
     >
       <div className="relative flex ">{props.icon}</div>
       <p className="text-lg">{props.displayName}</p>
-      <input
-        type="file"
-        className="hidden"
-        id="avatar"
-        onChange={(e) => {
-          UploadAvatar(e.target.files![0], props.changeImgSrc!);
-          // @ts-ignore
-          e.target.value = null;
-        }}
-      />
+      {props.index === 2 && (
+        <input
+          type="file"
+          className="hidden"
+          id="avatar"
+          onChange={(e) => {
+            UploadAvatar(
+              e.target.files![0],
+              props.changeImgSrc!,
+              props.setUpload!
+            );
+            // @ts-ignore
+            e.target.value = null;
+          }}
+        />
+      )}
     </div>
   );
 };

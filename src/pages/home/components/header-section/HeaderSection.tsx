@@ -7,6 +7,10 @@ import SearchMovie from "../../../../services/searchMovie/SearchMovie";
 import { Link } from "react-router-dom";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { CURRENT_USER } from "../../../../utils/SharedValues";
+import { CgProfile } from "react-icons/cg";
+import GetUserID from "../../../../utils/GetUserID";
+import supabase from "../../../../config/supabase/supabase";
+import { Avatar } from "@mui/material";
 
 type Props = {};
 
@@ -15,7 +19,8 @@ const HeaderSection = (props: Props) => {
   const [isSearching, setIsSearching] = React.useState<boolean>(false);
   const [resut, setResult] = React.useState<any>([]);
   const [showResult, setShowResult] = React.useState<boolean>(false);
-
+  const [hasAvatar, setHasAvatar] = React.useState<boolean>(false);
+  const [imageSrc, setImageSrc] = React.useState<string>("");
   var timeoutId: any;
 
   const handleSearch = (e: any) => {
@@ -40,31 +45,66 @@ const HeaderSection = (props: Props) => {
       setShowResult(false);
     }
   };
-
   React.useEffect(() => {
-    store
-      .get(CURRENT_USER)
-      .then((res) => {
-        console.log("my user from profile", res);
-        setMyProfile({ ...res });
-      })
-      .then(() => {
-        console.log(myProfile);
-      })
-      .finally(() => {});
+    const renderAvatar = async () => {
+      const user = await GetUserID();
+      const { data, error } = await supabase.storage.from("avatars").list("", {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name", order: "asc" },
+        search: user,
+      });
+      if (error) {
+        throw error;
+      }
+      if (data) {
+        setHasAvatar(data.length > 0);
+        if (data.length > 0) {
+          setImageSrc(
+            "https://wujwdhzvyjbytquaahdd.supabase.co/storage/v1/object/public/avatars/" +
+              data[0].name +
+              "?width=10&height=10"
+          );
+        }
+      }
+    };
+    renderAvatar();
+  }, []);
+  React.useEffect(() => {
+    const renderProfile = async () => {
+      const currentUsers = await store.get(CURRENT_USER);
+      setMyProfile(currentUsers);
+      if (currentUsers["avatar"] != null) {
+        setHasAvatar(true);
+        setImageSrc(currentUsers["avatar"]);
+      }
+    };
+
+    renderProfile();
   }, []);
 
   return (
-    <div className={`h-32 sticky top-0 left-0 right-0 px-4 py-3 bg-black z-50`}>
+    <div
+      className={`h-32 sticky top-0 left-0 right-0 px-4 py-3 bg-black z-50 flex flex-col gap-2`}
+    >
       <div
-        className="grid grid-cols-12 h-1/2"
+        className="grid grid-cols-12 h-full  gap-4"
         onClick={() => {
           setShowResult(false);
         }}
       >
         {/* avatar section */}
-        <div className="col-span-2 flex justify-start items-center">
-          <div className="w-10 h-10 rounded-full bg-gray-300"></div>
+        <div className=" col-span-2 ">
+          <div className="h-full w-auto">
+            <Avatar
+              src={imageSrc}
+              sx={{ width: 40, height: 40 }}
+              onClick={() => {
+                window.location.href = "/profile";
+              }}
+              className="cursor-pointer border border-white"
+            />
+          </div>
         </div>
         {/* user info section */}
         <div className="col-span-8 flex flex-col justify-center">
@@ -94,7 +134,7 @@ const HeaderSection = (props: Props) => {
       </div>
 
       {/* search section */}
-      <div className="mt-1 grid grid-cols-12 h-1/2 w-full">
+      <div className="grid grid-cols-12 h-1/2 w-full">
         <div className="relative col-span-12 flex justify-center items-center w-full">
           <div className="w-full h-10 bg-zinc-700 rounded-xl grid grid-cols-12 px-6 items-center justify-items-center">
             <div className="col-span-1 flex justify-center items-center">
