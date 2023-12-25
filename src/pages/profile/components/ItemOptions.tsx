@@ -11,10 +11,13 @@ type Props = {
   displayName: string;
   icon: React.ReactNode;
   index: number;
-  imgRef?: React.RefObject<HTMLImageElement>;
+  changeImgSrc?: React.Dispatch<React.SetStateAction<string>>;
+  setUpload?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ItemOptions = (props: Props) => {
+  const [file, setFile] = React.useState<File | null>(null);
+
   const handleOnClick = (index: Number): any => {
     switch (index) {
       case 0:
@@ -28,6 +31,8 @@ const ItemOptions = (props: Props) => {
       case 2:
         return () => {
           console.log("change profile");
+          const avatar = document.getElementById("avatar");
+          avatar?.click();
         };
       case 3:
         return () => {
@@ -43,40 +48,31 @@ const ItemOptions = (props: Props) => {
         };
     }
   };
-  return (
-    <>
-      <div
-        className="col-span-2 flex p-2 rounded-lg border border-slate-600 bg-slate-950 "
-        onClick={handleOnClick(props.index)}
-      >
-        <div className="relative flex ">{props.icon}</div>
-        <p className="text-lg">{props.displayName}</p>
-        {
-          //check if displayName = "change profile" or index = 2 then show file input to change profile
 
-          props.displayName == "Change Profiles" || props.index == 2 ? (
-            <input
-              type="file"
-              accept="image/*"
-              className="absolute top-0 left-0 w-full h-full opacity-0"
-              onChange={async (e) => {
-                console.log(e.target.files);
-                // @ts-ignore
-                const file = e.target.files[0];
-                await UploadAvatar(file).then((res) => {
-                  console.log(res);
-                  // @ts-ignore
-                  props.imgRef.current.src = res;
-                });
-              }}
-            />
-          ) : (
-            ""
-          )
-        }
-      </div>
-      <div className="col-span-2"></div>
-    </>
+  return (
+    <div
+      className="col-span-2 flex p-2 rounded-lg border border-slate-600 bg-slate-950 "
+      onClick={handleOnClick(props.index)}
+    >
+      <div className="relative flex ">{props.icon}</div>
+      <p className="text-lg">{props.displayName}</p>
+      {props.index === 2 && (
+        <input
+          type="file"
+          className="hidden"
+          id="avatar"
+          onChange={(e) => {
+            UploadAvatar(
+              e.target.files![0],
+              props.changeImgSrc!,
+              props.setUpload!
+            );
+            // @ts-ignore
+            e.target.value = null;
+          }}
+        />
+      )}
+    </div>
   );
 };
 
