@@ -9,8 +9,47 @@ import store from "../../config/storage/IonicStorage";
 import { useEffect, useState } from "react";
 import HeaderSection from "./components/header-section/HeaderSection";
 import PreviewSection from "./components/preview-section/PreviewSection";
+import React from "react";
+import supabase from "../../config/supabase/supabase";
+import {
+  Notice,
+  insertNotice,
+  setNotices,
+} from "../../features/notices/noticeSlice";
+import { useDispatch } from "react-redux";
+import FetchAllNoticesFirst from "../../services/notices/FetchAllNoticesFirst";
+import { set } from "react-hook-form";
 const Home: React.FC = () => {
   const [user_id, setUserId] = useState<string>("");
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    const setmyNotice = async () => {
+      await FetchAllNoticesFirst().then((res: Notice[]) => {
+        dispatch(setNotices(res));
+      });
+    };
+    setmyNotice();
+  }, []);
+
+  React.useEffect(() => {
+    const tblNotification = supabase
+      .channel("custom-insert-channel")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "tbl_notification" },
+        (payload) => {
+          console.log("Change received!", payload);
+          const myNotice: Notice = new Notice();
+          myNotice.id = payload.new.id.toString();
+          myNotice.content = payload.new.text;
+          myNotice.userId = payload.new.user_id;
+          myNotice.createdAt = payload.new.created_at;
+          dispatch(insertNotice(myNotice));
+        }
+      )
+      .subscribe();
+  }, []);
 
   useEffect(() => {
     store.get("user_id").then((res: any) => {

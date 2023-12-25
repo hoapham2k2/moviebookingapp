@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import handleLogOut from "../utils/Logout";
 import supabase from "../../../config/supabase/supabase";
 import UploadAvatar from "../../../services/files/UploadAvatar";
+import { useSelector } from "react-redux";
+import { Badge } from "@mui/material";
 
 type Props = {
   displayName: string;
@@ -17,7 +19,8 @@ type Props = {
 
 const ItemOptions = (props: Props) => {
   const [file, setFile] = React.useState<File | null>(null);
-
+  const notices = useSelector((state: any) => state.notice.notices);
+  console.log(notices);
   const handleOnClick = (index: Number): any => {
     switch (index) {
       case 0:
@@ -55,6 +58,9 @@ const ItemOptions = (props: Props) => {
       onClick={handleOnClick(props.index)}
     >
       <div className="relative flex ">{props.icon}</div>
+      {props.index === 0 && (
+        <Badge badgeContent={notices.length} color="primary"></Badge>
+      )}
       <p className="text-lg">{props.displayName}</p>
       {props.index === 2 && (
         <input
