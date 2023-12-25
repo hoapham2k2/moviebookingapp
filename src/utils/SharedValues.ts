@@ -6,6 +6,7 @@ const ROUTES = {
   PROFILE: "/profile",
   HOME_DETAIL: "/home/:id",
   TICKET_DETAIL: "/home/ticket/movieId=:id",
+  UPDATE_PASSWORD: "/update-password",
 };
 
 

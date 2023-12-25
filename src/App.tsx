@@ -44,6 +44,7 @@ import ReactGA from "react-ga4";
 import ApiListener from "./components/apiListener/ApiListener";
 import PrivateRoutesWrapper from "./routes/PrivateRoutesWrapper";
 import { ROUTES } from "./utils/SharedValues";
+import UpdatePassword from "./pages/forgot-password/UpdatePassword";
 
 setupIonicReact();
 
@@ -124,13 +125,18 @@ const App = () => {
                 exact={true}
               />
             </AppLayout>
-                  
+
             <Route path="/page/:name" component={AppLayout} exact={true} />
             <Route path="/login" component={LoginPage} exact={true} />
             <Route path="/register" component={RegisterPage} exact={true} />
             <Route
               path="/forgot-password"
               component={ForgotPasswordPage}
+              exact={true}
+            />
+            <Route
+              path={ROUTES.UPDATE_PASSWORD}
+              component={UpdatePassword}
               exact={true}
             />
             <Route path="/payment" component={() => <Payment />} exact={true} />
