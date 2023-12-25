@@ -78,3 +78,19 @@ export const forgotPassword = async (email: string): Promise<any | null> => {
     throw error;
   }
 };
+
+export const updatePasswordForUser = async (
+  email: string,
+  password: string
+): Promise<any> => {
+  const { data, error } = await supabase.auth.updateUser({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    throw error;
+  }
+  console.log("Update password success with data: ", data);
+  return data;
+};

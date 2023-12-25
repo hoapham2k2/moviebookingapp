@@ -1,5 +1,6 @@
 import React from "react";
 import { forgotPassword } from "../../services/authentication/Authentication";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -11,17 +12,17 @@ const ForgotPasswordPage = (props: Props) => {
     await forgotPassword(email)
       .then((res) => {
         console.log(res);
-        alert("Please check your email to reset password");
+        toast.success("Check your email to reset password");
       })
       .catch((err) => {
         console.log(err);
-        alert("Email is not exist");
+        toast.error(err.message);
       });
   };
-  const handleCheck = () =>{
-    (check)?console.log(check):console.log(check)
+  const handleCheck = () => {
+    check ? console.log(check) : console.log(check);
     setCheck(true);
-  }
+  };
   return (
     <div className="w-full h-full">
       <div className="h-20 px-4 py-8 flex justify-start items-center">
