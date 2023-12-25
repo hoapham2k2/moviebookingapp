@@ -3,7 +3,7 @@ import React from "react";
 type Props = {};
 
 const CheckIndex = (props: Props) => {
-  const{check,setCheck} = React.useState<boolean>(false)
+  const[check,setCheck] = React.useState<boolean>(false)
   const [email, setEmail] = React.useState<string>("");
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
