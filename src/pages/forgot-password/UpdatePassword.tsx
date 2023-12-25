@@ -2,6 +2,9 @@ import React from "react";
 import { updatePasswordForUser } from "../../services/authentication/Authentication";
 import toast from "react-hot-toast";
 import ModalIsLoading from "../../components/modalIsLoading/ModalIsLoading";
+import store from "../../config/storage/IonicStorage";
+import { CURRENT_USER } from "../../utils/SharedValues";
+import { useHistory } from "react-router";
 
 type Props = {};
 
@@ -9,7 +12,7 @@ const UpdatePassword = (props: Props) => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false);
-
+  const router = useHistory();
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsUpdate(true);
@@ -17,6 +20,8 @@ const UpdatePassword = (props: Props) => {
       const data = await updatePasswordForUser(email, password);
       toast.success("Update password successfully");
       console.log(data);
+      store.set(CURRENT_USER, data.user);
+      router.push("/home");
     } catch (err: any) {
       toast.error(err.message);
     } finally {
