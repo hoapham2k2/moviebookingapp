@@ -4,7 +4,7 @@ import { forgotPassword } from "../../services/authentication/Authentication";
 type Props = {};
 
 const ForgotPasswordPage = (props: Props) => {
-  const{check,setCheck} = React.useState<boolean>(false)
+  const [check, setCheck] = React.useState<boolean>(false);
   const [email, setEmail] = React.useState<string>("");
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
