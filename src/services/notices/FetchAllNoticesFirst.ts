@@ -2,7 +2,10 @@ import supabase from "../../config/supabase/supabase";
 import { Notice } from "../../features/notices/noticeSlice";
 
 export default async function FetchAllNoticesFirst(): Promise<Notice[]> {
-  const { data, error } = await supabase.from("tbl_notification").select();
+  const { data, error } = await supabase
+    .from("tbl_notification")
+    .select()
+    .order("created_at", { ascending: false }); //order by created_at desc
 
   if (error) {
     throw error;

@@ -1,5 +1,5 @@
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import React from "react";
+import React, { ReactEventHandler } from "react";
 import store from "../../../config/storage/IonicStorage";
 import { logoutUser } from "../../../services/authentication/Authentication";
 import toast from "react-hot-toast";
@@ -8,6 +8,8 @@ import supabase from "../../../config/supabase/supabase";
 import UploadAvatar from "../../../services/files/UploadAvatar";
 import { useSelector } from "react-redux";
 import { Badge } from "@mui/material";
+import NotificationsDrawer from "../utils/NotificationsDrawer";
+import { set } from "react-hook-form";
 
 type Props = {
   displayName: string;
@@ -20,12 +22,13 @@ type Props = {
 const ItemOptions = (props: Props) => {
   const [file, setFile] = React.useState<File | null>(null);
   const notices = useSelector((state: any) => state.notice.notices);
-  console.log(notices);
+  const [isOpenDrawer, setIsOpenDrawer] = React.useState(false);
   const handleOnClick = (index: Number): any => {
     switch (index) {
       case 0:
         return () => {
           console.log("notification");
+          setIsOpenDrawer(!isOpenDrawer);
         };
       case 1:
         return () => {
@@ -57,6 +60,7 @@ const ItemOptions = (props: Props) => {
       className="col-span-2 flex p-2 rounded-lg border border-slate-600 bg-slate-950 "
       onClick={handleOnClick(props.index)}
     >
+      <NotificationsDrawer isOpen={isOpenDrawer} listNotices={notices} />
       <div className="relative flex ">{props.icon}</div>
       {props.index === 0 && (
         <Badge badgeContent={notices.length} color="primary"></Badge>
