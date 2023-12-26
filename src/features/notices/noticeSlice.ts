@@ -20,7 +20,7 @@ const noticeSlice = createSlice({
   initialState,
   reducers: {
     insertNotice(state, action: PayloadAction<Notice>) {
-      state.notices.push(action.payload);
+      state.notices.unshift(action.payload); 
     },
     setNotices(state, action: PayloadAction<Notice[]>) {
       state.notices = action.payload;
