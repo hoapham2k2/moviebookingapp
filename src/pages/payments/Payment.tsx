@@ -5,15 +5,14 @@ import React, { useEffect, useState } from "react";
 import { BsBank, BsWallet } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
 import store from "../../config/storage/IonicStorage";
-import TicketGetDTO from "../../dtos/TicketGetDTO";
-import { InsertTicket } from "../../services/ticket/InsertTicket";
+import GetVNPayCheckoutUrl from "../../services/payment/VNPay";
 
 type Props = {};
 
 const Payment = (props: Props) => {
   const [currentMovie, setCurrentMovie] = useState<any>(-1);
   const router = useHistory();
-
+  const [ticketId, setTicketId] = useState<any>(-1);
   useEffect(() => {
     const getCurrentIdMovie = async () => {
       const movieId = await store.get("movie_id_booking");
@@ -23,43 +22,48 @@ const Payment = (props: Props) => {
   }, []);
 
   const handlePayment = async () => {
-    const movieId = await store.get("movie_id_booking");
-    const location = await store.get("location");
-    const cinemaLocation = await store.get("cinema_location");
-    const datetime = await store.get("date_booking");
-    const timebook = await store.get("time_booking");
-    const seatdata = await store.get("seat");
-    const userInfor = await store.get("myUser");
-    const ticket = new TicketGetDTO();
-    ticket.movie_id = movieId;
-    ticket.cinema_location = cinemaLocation;
-    ticket.booking_time = timebook;
-    ticket.user_id = userInfor["id"];
-    ticket.seat = seatdata.toString();
-    ticket.location = location;
-    ticket.price = 500 * seatdata.length;
-    //handle convert date
-    const dateBooking = new Date(datetime);
-
-    // Get the year, month, and day of the UTC date
-    const year = dateBooking.getUTCFullYear();
-    const month = dateBooking.getUTCMonth() + 1;
-    const day = dateBooking.getUTCDate() + 1;
-
-    // Format the date as 11-15-2023
-    const formattedDate = `${month}-${day}-${year}`;
-    console.log("formatted date:", formattedDate);
-
-    ticket.booking_date = formattedDate;
+    // const movieId = await store.get("movie_id_booking");
+    // const location = await store.get("location");
+    // const cinemaLocation = await store.get("cinema_location");
+    // const datetime = await store.get("date_booking");
+    // const timebook = await store.get("time_booking");
+    // const seatdata = await store.get("seat");
+    // const userInfor = await store.get("myUser");
+    // const ticket = new TicketGetDTO();
+    // ticket.movie_id = movieId;
+    // ticket.cinema_location = cinemaLocation;
+    // ticket.booking_time = timebook;
+    // // ticket.user_id = userInfor["id"];
+    // ticket.seat = seatdata.toString();
+    // ticket.location = location;
+    // ticket.price = 500 * seatdata.length;
+    // //handle convert date
+    // const dateBooking = new Date(datetime);
+    // // Get the year, month, and day of the UTC date
+    // const year = dateBooking.getUTCFullYear();
+    // const month = dateBooking.getUTCMonth() + 1;
+    // const day = dateBooking.getUTCDate() + 1;
+    // // Format the date as 11-15-2023
+    // const formattedDate = `${month}-${day}-${year}`;
+    // console.log("formatted date:", formattedDate);
+    // ticket.booking_date = formattedDate;
     // await InsertTicket(ticket);
+    // const myTicket = await InsertTicket(ticket);
+    // await store.set("ticket_id", myTicket[0]["id"]);
+    // 1;
+    // alert("Payment successfull with ticket id:  " + ticketId[0]["id"]);
+    // // get ticket id to store
+    // router.push("/paymentStatus");
+    const payment_url = GetVNPayCheckoutUrl(
+      getRandomInt(1000000000).toString()
+    );
 
-    const ticketId = await InsertTicket(ticket);
-    await store.set("ticket_id", ticketId[0]["id"]);
+    // redirect to payment url
+    window.location.href = payment_url;
+  };
 
-    alert("Payment successfull with ticket id:  " + ticketId[0]["id"]);
-    // get ticket id to store
-
-    router.push("/paymentStatus");
+  const getRandomInt = (max: number) => {
+    return Math.floor(Math.random() * max);
   };
 
   return (
@@ -125,3 +129,4 @@ const Payment = (props: Props) => {
 };
 
 export default Payment;
+

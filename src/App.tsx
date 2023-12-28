@@ -51,8 +51,19 @@ import ReduxProvider from "./components/reduxStore/ReduxProvider";
 import { Notice } from "./features/notices/noticeSlice";
 import { useDispatch } from "react-redux";
 
+
 setupIonicReact();
 
+// export const GetPaymentUrl = async (orderId: string) => {
+//   const urlString = await vnpayInstance.buildPaymentUrl({
+//     vnp_Amount: 100000, // amount in VND
+//     vnp_IpAddr: "192.168.1.1", // user ip address
+//     vnp_TxnRef: "111111", // ma hoa don
+//     vnp_OrderInfo: `Thanh toan cho ma GD: `,
+//   });
+
+//   return urlString;
+// };
 const App = () => {
   const [mySession, setMySession] = useState<any>({});
 
@@ -69,7 +80,6 @@ const App = () => {
     });
   }, []);
 
-  
   return (
     <ReduxProvider>
       <MuiProvider>

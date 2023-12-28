@@ -2,9 +2,10 @@ import supabase from "../../config/supabase/supabase";
 import store from "../../config/storage/IonicStorage";
 
 import TicketGetDTO from "../../dtos/TicketGetDTO";
+import { CURRENT_USER } from "../../utils/SharedValues";
 
 export const GetSelectedSeat = async () => {
-  const value = await store.get("myUser");
+  const value = await store.get(CURRENT_USER);
   const userId = value["id"];
   const movieId = await store.get("movie_id_booking");
   const location = await store.get("location");
@@ -23,6 +24,15 @@ export const GetSelectedSeat = async () => {
   const formattedDate = `${month}-${day}-${year}`;
   console.log("formatted date:", formattedDate);
 
+  console.log("preparing to get selected seat with params: ", {
+    userId,
+    movieId,
+    location,
+    cinemaLocation,
+    timebook,
+    formattedDate,
+  });
+
   let { data, error } = await supabase
     .from("tbl_ticket")
     .select("seat")
@@ -33,6 +43,10 @@ export const GetSelectedSeat = async () => {
     .eq("booking_date", formattedDate)
     .eq("location", location);
 
+  if (error) {
+    console.log("error", error);
+  }
+
   var listResult: any = [];
 
   if (data != null) {
@@ -40,6 +54,8 @@ export const GetSelectedSeat = async () => {
       listResult = listResult.concat(data![i]["seat"].split(","));
     }
   }
+
+  console.log("list seat: ", listResult);
   await store.set("selected-seat", listResult);
   return listResult;
 };
