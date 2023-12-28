@@ -6,12 +6,12 @@ const config: CapacitorConfig = {
   appName: "my-android-app", //your app name
   webDir: "dist", //your web dir (build folder)
   server: {
-    // androidScheme: "https", //your scheme, default is https
-    // hostname: "moviebookingapp.vercel.app/home", //your hostname
+    androidScheme: "https", //your scheme, default is https
+    hostname: "moviebookingapp.vercel.app", //your hostname
 
-    //turn to localhost for testing
-    androidScheme: "http",
-    hostname: "localhost:8100",
+    // //turn to localhost for testing
+    // androidScheme: "http",
+    // hostname: "localhost:8100",
   },
 };
 
