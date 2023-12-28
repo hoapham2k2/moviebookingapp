@@ -84,6 +84,11 @@ const App = () => {
       <MuiProvider>
         <IonApp>
           <IonReactRouter>
+            <Route
+              path="/.well-known/assetlinks.json"
+              component={() => <div>assetlinks.json</div>}
+              exact={true}
+            />
             <IonRouterOutlet>
               <AppLayout>
                 <Route
