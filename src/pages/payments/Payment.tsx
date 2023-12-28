@@ -6,57 +6,43 @@ import { BsBank, BsWallet } from "react-icons/bs";
 import { Link, useHistory } from "react-router-dom";
 import store from "../../config/storage/IonicStorage";
 import GetVNPayCheckoutUrl from "../../services/payment/VNPay";
+import { CURRENT_TICKET, CURRENT_USER, TICKET } from "../../utils/SharedValues";
+import TicketGetDTO from "../../dtos/TicketGetDTO";
 
 type Props = {};
 
 const Payment = (props: Props) => {
-  const [currentMovie, setCurrentMovie] = useState<any>(-1);
+  // const [currentMovie, setCurrentMovie] = useState<any>(-1);
   const router = useHistory();
-  const [ticketId, setTicketId] = useState<any>(-1);
-  useEffect(() => {
-    const getCurrentIdMovie = async () => {
-      const movieId = await store.get("movie_id_booking");
-      setCurrentMovie(movieId);
-    };
-    getCurrentIdMovie();
-  }, []);
+  const [ticketId, setTicketId] = useState<number>(-1);
+
+  // useEffect(() => {
+  //   const getCurrentIdMovie = async () => {
+  //     const movieId = await store.get(TICKET.MOVIE_ID);
+  //     setCurrentMovie(movieId);
+  //   };
+  //   getCurrentIdMovie();
+  // }, []);
 
   const handlePayment = async () => {
-    // const movieId = await store.get("movie_id_booking");
-    // const location = await store.get("location");
-    // const cinemaLocation = await store.get("cinema_location");
-    // const datetime = await store.get("date_booking");
-    // const timebook = await store.get("time_booking");
-    // const seatdata = await store.get("seat");
-    // const userInfor = await store.get("myUser");
-    // const ticket = new TicketGetDTO();
-    // ticket.movie_id = movieId;
-    // ticket.cinema_location = cinemaLocation;
-    // ticket.booking_time = timebook;
-    // // ticket.user_id = userInfor["id"];
-    // ticket.seat = seatdata.toString();
-    // ticket.location = location;
-    // ticket.price = 500 * seatdata.length;
-    // //handle convert date
-    // const dateBooking = new Date(datetime);
-    // // Get the year, month, and day of the UTC date
-    // const year = dateBooking.getUTCFullYear();
-    // const month = dateBooking.getUTCMonth() + 1;
-    // const day = dateBooking.getUTCDate() + 1;
-    // // Format the date as 11-15-2023
-    // const formattedDate = `${month}-${day}-${year}`;
-    // console.log("formatted date:", formattedDate);
-    // ticket.booking_date = formattedDate;
-    // await InsertTicket(ticket);
-    // const myTicket = await InsertTicket(ticket);
-    // await store.set("ticket_id", myTicket[0]["id"]);
-    // 1;
-    // alert("Payment successfull with ticket id:  " + ticketId[0]["id"]);
-    // // get ticket id to store
-    // router.push("/paymentStatus");
-    const payment_url = GetVNPayCheckoutUrl(
-      getRandomInt(1000000000).toString()
-    );
+    const ticket = new TicketGetDTO();
+
+    ticket.movie_id = await store.get(TICKET.MOVIE_ID);
+    ticket.cinema_location = await store.get(TICKET.CINEMA_LOCATION);
+    ticket.location = await store.get(TICKET.LOCATION);
+    ticket.booking_date = await store.get(TICKET.DATE_BOOKING);
+    ticket.booking_time = await store.get(TICKET.TIME_BOOKING);
+    ticket.user_id = await store.get(CURRENT_USER).then((res: any) => {
+      return res["id"];
+    });
+    ticket.seat = await store.get(TICKET.SEAT);
+    ticket.price = 500 * ticket.seat.length;
+
+    console.log(ticket);
+
+    await store.set(CURRENT_TICKET, ticket);
+
+    const payment_url = GetVNPayCheckoutUrl(ticket.id.toString());
 
     // redirect to payment url
     window.location.href = payment_url;
@@ -70,9 +56,9 @@ const Payment = (props: Props) => {
     <div className="relative flex flex-col items-center justify-center">
       {/**Header */}
       <header className="absolute text-lg font-semibold top-3 flex w-full items-center justify-between border-b-2 border-slate-800 pb-4">
-        <Link to={`/home/ticket/movieId=${currentMovie}`}>
+        {/* <Link to={`/home/ticket/movieId=${currentMovie}`}>
           <ArrowLeftIcon className="w-6 h-6 ml-2" />
-        </Link>
+        </Link> */}
         Payment
         <div className="w-6"></div>
       </header>

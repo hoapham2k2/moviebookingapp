@@ -1,6 +1,17 @@
 import supabase from "../../config/supabase/supabase";
 import MovieGetDTO from "../../dtos/MovieGetDTO";
 
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Get movie detail from database
+  </summary>
+  <param name="id_movie">the movie id to get detail</param>
+  <returns>MovieGetDTO</returns>
+*/
+
 export default async function SelectMovieDetail(
   id_movie: Number
 ): Promise<MovieGetDTO | null | undefined> {

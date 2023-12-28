@@ -1,8 +1,17 @@
 import supabase from "../../config/supabase/supabase";
 import store from "../../config/storage/IonicStorage";
 
-//create a function with input value is movieId to insert data
-export const InsertFavourite = async (movieId: number) => {
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Insert movie to favourite list
+  </summary>
+  <param name="movieId">the movie id to insert</param>
+  <returns>Promise<boolean></returns>
+*/
+export const InsertFavourite = async (movieId: number): Promise<boolean> => {
   let { data, error } = await supabase.from("tbl_favourite").select("movie_id");
 
   const isFavourite = data?.find((item) => item.movie_id === movieId);

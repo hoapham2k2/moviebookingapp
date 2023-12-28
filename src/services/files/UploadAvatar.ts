@@ -1,7 +1,19 @@
 import toast from "react-hot-toast";
 import supabase from "../../config/supabase/supabase";
 import GetUserID from "../../utils/GetUserID";
-import React from "react";
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Upload avatar to database, change image source and set upload status
+  </summary>
+  <param name="file">the file to upload</param>
+  <param name="changeImgSrc">the function to change image source</param>
+  <param name="setUpload">the function to set upload status</param>
+  <returns>Promise<any></returns>
+*/
+
 
 export default async function UploadAvatar(
   file: File,

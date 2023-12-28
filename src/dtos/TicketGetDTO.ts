@@ -1,5 +1,5 @@
 export default class TicketGetDTO {
-  id: number = 0;
+  id: number = Date.now().valueOf();
   created_at: Date = new Date();
   booking_time: string = "";
   order_id: number = 0; // foreign key

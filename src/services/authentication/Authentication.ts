@@ -1,9 +1,16 @@
 import supabase from "../../config/supabase/supabase";
 import LoginRequestDTO from "../../dtos/LoginRequestDTO";
-import RegisterGetDTO from "../../dtos/RegisterGetDTO";
 import RegisterPostDTO from "../../dtos/RegisterPostDTO";
-import GenerateRandomPassword from "../../utils/GenerateRandomPassword";
 
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Login user
+  </summary>
+  <param name="data">data to login</param>
+  <returns>Promise<any></returns>
+*/
 export const loginUser = async (data: LoginRequestDTO) => {
   const { email, password } = data;
   try {
@@ -22,10 +29,28 @@ export const loginUser = async (data: LoginRequestDTO) => {
   }
 };
 
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Logout user
+  </summary>
+  <returns>Promise<any></returns>
+*/
 export const logoutUser = async () => {
   await supabase.auth.signOut();
 };
 
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Register user
+  </summary>
+  <param name="mydata">data to register</param>
+  <returns>Promise<any></returns>
+*/
 export const registerUser = async (mydata: RegisterPostDTO): Promise<any> => {
   try {
     const { data, error } = await supabase.auth.signUp({
@@ -64,6 +89,16 @@ export const registerUser = async (mydata: RegisterPostDTO): Promise<any> => {
   }
 };
 
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Forgot password, this function will send email that contain link to reset password
+  </summary>
+  <param name="email">email to reset password</param>
+  <returns>Promise<any></returns>
+*/
 export const forgotPassword = async (email: string): Promise<any | null> => {
   try {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
@@ -79,6 +114,17 @@ export const forgotPassword = async (email: string): Promise<any | null> => {
   }
 };
 
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Update password by email and new password
+  </summary>
+  <param name="email">email to update password</param>
+  <param name="password">new password</param>
+  <returns>Promise<any></returns>
+*/
 export const updatePasswordForUser = async (
   email: string,
   password: string

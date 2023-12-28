@@ -12,7 +12,6 @@ import {
 import { useDispatch } from "react-redux";
 import FetchAllNoticesFirst from "../../services/notices/FetchAllNoticesFirst";
 const Home: React.FC = () => {
-  const [user_id, setUserId] = useState<string>("");
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -41,12 +40,6 @@ const Home: React.FC = () => {
         }
       )
       .subscribe();
-  }, []);
-
-  useEffect(() => {
-    store.get("user_id").then((res: any) => {
-      setUserId(res);
-    });
   }, []);
 
   return (

@@ -8,6 +8,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import store from "../../../config/storage/IonicStorage";
+import { TICKET } from "../../../utils/SharedValues";
 interface TicketBookingProps {
   handleReRender: any;
 }
@@ -25,10 +26,11 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
   const [selectedSlide, setSelectedSlide] = useState<number | null>(0);
 
   const handleSlideClick: React.MouseEventHandler<HTMLElement> = async (e) => {
+    console.log("e: ", e);
     const index = e.currentTarget.dataset.index;
     if (index) {
-      console.log(index);
-      store.set("time_booking", timeMap[parseInt(index)]);
+      console.log("index: ", index);
+      store.set(TICKET.TIME_BOOKING, timeMap[parseInt(index)]);
       setSelectedSlide(parseInt(index, 10));
       await handleReRender();
     }
@@ -41,17 +43,22 @@ const TicketBookingDateTime: React.FC<TicketBookingProps> = ({
           <p className="text-base mb-1">Select a date</p>
           <MobileDatePicker
             disablePast
-            defaultValue={dayjs()}
+            // defaultValue={dayjs()}
             onChange={async (
               value: any,
               context: PickerChangeHandlerContext<DateValidationError>
             ) => {
               if (value) {
+                console.log("value: ", value);
+                console.log("context: ", context);
                 // Access the value within the ChangeEvent if it's not null
                 const handleSaveLocal = async () => {
-                  const currentDate = value.$d.toString();
-                  await store.set("date_booking", currentDate);
-                  console.log(currentDate);
+                  const date = value.$D;
+                  const month = value.$M + 1; // month is 0-based
+                  const year = value.$y;
+                  const currentDate = `${date}/${month}/${year}`;
+                  console.log("currentDate: ", currentDate);
+                  await store.set(TICKET.DATE_BOOKING, currentDate);
                 };
                 handleSaveLocal();
                 await handleReRender();

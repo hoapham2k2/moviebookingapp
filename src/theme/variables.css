@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ionic Variables and Theming. For more info, please see:
-http://ionicframework.com/docs/theming/ */
+
+
+/* 
+  Modified by: Hoa Pham
+  Modified on: 28-Dec-2023
+  Description: This is the default Ionic CSS Variables file.
+  This file is used to override the Ionic CSS variables
+*/
 
 /** Ionic CSS Variables **/
 :root {
