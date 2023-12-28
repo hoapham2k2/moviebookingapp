@@ -24,6 +24,6 @@ export const InsertTicket = async (ticket: TicketGetDTO) : Promise<any> => {
     console.log(error);
     return;
   }
-  console.log(data);
+  console.log("ticket info after insert: ", data);
   return data;
 }

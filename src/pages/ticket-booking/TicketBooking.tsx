@@ -6,15 +6,18 @@ import TicketBookingDateTime from "./components/TicketBookingDateTime";
 import TicketBookingSeat from "./components/TicketBookingSeat";
 import store from "../../config/storage/IonicStorage";
 import { GetSelectedSeat } from "../../services/seat/GetSelectedSeat";
+import { TICKET } from "../../utils/SharedValues";
 
 type Props = {};
 
 const TicketBookingPage = (props: Props) => {
   const router = useHistory();
   const movieId = router.location.pathname.split("/")[3].split("=")[1];
-  store.set("movie_id_booking", movieId);
+  store.set(TICKET.MOVIE_ID, movieId);
   console.log(movieId);
   const [selectedSeat, setSelectedSeat] = React.useState<any>([]);
+
+  
   const handleReRender = async () => {
     console.log("Re render start");
     const seatChoosen = await GetSelectedSeat();

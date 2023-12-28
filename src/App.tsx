@@ -29,7 +29,6 @@ import "./theme/variables.css";
 import AppLayout from "./layout/AppLayout";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/Register";
-import { useEffect, useState } from "react";
 import store from "./config/storage/IonicStorage";
 import TicketsListPage from "./pages/tickets-list/TicketsList";
 import WishListPage from "./pages/wishlist/WishList";
@@ -41,21 +40,25 @@ import MuiProvider from "./providers/MuiProvider";
 import Payment from "./pages/payments/Payment";
 import PaymentStatus from "./pages/payments/paymentPages/PaymentStatus";
 import ReactGA from "react-ga4";
-import ApiListener from "./components/apiListener/ApiListener";
 import PrivateRoutesWrapper from "./routes/PrivateRoutesWrapper";
 import { ROUTES } from "./utils/SharedValues";
 import UpdatePassword from "./pages/forgot-password/UpdatePassword";
 import React from "react";
-import supabase from "./config/supabase/supabase";
 import ReduxProvider from "./components/reduxStore/ReduxProvider";
-import { Notice } from "./features/notices/noticeSlice";
-import { useDispatch } from "react-redux";
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: This is the main component of the application, we are defining all the routes here
+  </summary>
+*/
 
 setupIonicReact();
-
 const App = () => {
-  const [mySession, setMySession] = useState<any>({});
+  const [mySession, setMySession] = React.useState<any>({});
 
+  // WTF is this? - Hoa Pham
   ReactGA.initialize("G-ELBET3E24P");
   ReactGA.send({
     hitType: "pageview",
@@ -63,13 +66,19 @@ const App = () => {
     title: "Custom Title",
   });
 
-  useEffect(() => {
+  /* 
+    <summary>
+      Modified by: Hoa Pham
+      Modified on: 28-Dec-2023
+      Description: This below hook is used to get the session from the storage, if the session is available then we are redirecting the user to the home page, else we are redirecting the user to the login page
+    </summary>
+  */
+  React.useEffect(() => {
     store.get("mySession").then((res: any) => {
       setMySession(res);
     });
   }, []);
 
-  
   return (
     <ReduxProvider>
       <MuiProvider>
@@ -115,20 +124,12 @@ const App = () => {
                 />
                 <Route
                   path={ROUTES.HOME_DETAIL}
-                  component={() => (
-                    <PrivateRoutesWrapper route={ROUTES.HOME_DETAIL}>
-                      <MovieDetailPage />
-                    </PrivateRoutesWrapper>
-                  )}
+                  component={() => <MovieDetailPage />}
                   exact={true}
                 />
                 <Route
                   path={ROUTES.TICKET_DETAIL}
-                  component={() => (
-                    <PrivateRoutesWrapper route={ROUTES.TICKET_DETAIL}>
-                      <TicketBookingPage />
-                    </PrivateRoutesWrapper>
-                  )}
+                  component={() => <TicketBookingPage />}
                   exact={true}
                 />
               </AppLayout>
@@ -147,17 +148,17 @@ const App = () => {
                 exact={true}
               />
               <Route
-                path="/payment"
+                path={ROUTES.PAYMENT}
                 component={() => <Payment />}
                 exact={true}
               />
               <Route
-                path="/paymentStatus"
+                path={ROUTES.PAYMENT_STATUS}
                 component={() => <PaymentStatus />}
                 exact={true}
               />
               <Route exact path="/">
-                {mySession ? <Redirect to="/home" /> : <LoginPage />}
+                {mySession ? <Redirect to={ROUTES.HOME} /> : <LoginPage />}
               </Route>
             </IonRouterOutlet>
           </IonReactRouter>
@@ -166,5 +167,6 @@ const App = () => {
     </ReduxProvider>
   );
 };
+
 
 export default App;

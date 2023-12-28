@@ -1,10 +1,3 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
 import store from "../../config/storage/IonicStorage";
 import { useEffect, useState } from "react";
 import HeaderSection from "./components/header-section/HeaderSection";
@@ -18,9 +11,7 @@ import {
 } from "../../features/notices/noticeSlice";
 import { useDispatch } from "react-redux";
 import FetchAllNoticesFirst from "../../services/notices/FetchAllNoticesFirst";
-import { set } from "react-hook-form";
 const Home: React.FC = () => {
-  const [user_id, setUserId] = useState<string>("");
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -49,12 +40,6 @@ const Home: React.FC = () => {
         }
       )
       .subscribe();
-  }, []);
-
-  useEffect(() => {
-    store.get("user_id").then((res: any) => {
-      setUserId(res);
-    });
   }, []);
 
   return (

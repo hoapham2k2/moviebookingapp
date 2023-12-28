@@ -48,35 +48,6 @@ const PreviewSection = (props: Props) => {
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
-        {/* {data &&
-          data.map((item, index) => {
-            return (
-              <Link
-                to={`/home/${item.id}`}
-                key={item.title}
-                className="col-span-1"
-              >
-                <div className="w-full h-48 rounded-xl bg-zinc-700">
-                  <img
-                    src={`${item.thumbnail}`}
-                    alt={`${item.title}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="w-full grid grid-cols-6">
-                  <div
-                    className=" text-xs text-white mt-2 text col-span-5
-                  "
-                  >
-                    {handlePreviewString(item.title, 25)}
-                  </div>
-                  <div className="text-white  text-lg col-span-1 flex flex-col justify-start mt-3 items-end">
-                    <BsThreeDotsVertical />
-                  </div>
-                </div>
-              </Link>
-            );
-          })} */}
         {data && (
           <div className="z-0">
             <Swiper
@@ -91,6 +62,8 @@ const PreviewSection = (props: Props) => {
               }}
             >
               {data.map((item, index) => {
+                console.log(item);
+
                 return (
                   <SwiperSlide key={index}>
                     <Link

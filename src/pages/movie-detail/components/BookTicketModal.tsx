@@ -3,14 +3,15 @@ import { RiTicket2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import store from "../../../config/storage/IonicStorage";
 import dayjs from "dayjs";
+import { TICKET } from "../../../utils/SharedValues";
 type Props = {
   movieId: Number;
 };
 
 const BookTicketModal = (props: Props) => {
   const handleInitialStore = async () => {
-    await store.set("time_booking", "10:00 AM");
-    await store.set("date_booking", "11/15/2023");
+    await store.set(TICKET.TIME_BOOKING, "10:00 AM");
+    await store.set(TICKET.DATE_BOOKING, "11/15/2023");
   };
   return (
     <div

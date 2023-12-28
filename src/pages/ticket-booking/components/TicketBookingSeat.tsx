@@ -3,6 +3,7 @@ import store from "../../../config/storage/IonicStorage";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router";
 import { GetSelectedSeat } from "../../../services/seat/GetSelectedSeat";
+import { ROUTES, TICKET } from "../../../utils/SharedValues";
 
 interface TicketBookingSeatProps {
   selectedSeat: any;
@@ -20,7 +21,7 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
   console.log(seat);
   console.log(selectedSeat);
   const resetSeat = async () => {
-    await store.set("seat", []);
+    await store.set(TICKET.SEAT, []);
   };
 
   const router = useHistory();
@@ -30,17 +31,12 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     //Data local here
-    const location = await store.get("location");
-    const cinemaLocation = await store.get("cinema_location");
-    const datetime = await store.get("date_booking");
-    const timebook = await store.get("time_booking");
-    const seatdata = await store.get("seat");
-    //Print for test
-    console.log(location);
-    console.log(cinemaLocation);
-    console.log(datetime);
-    console.log(timebook);
-    console.log(seatdata);
+    const datetime = await store.get(TICKET.DATE_BOOKING);
+    const timebook = await store.get(TICKET.TIME_BOOKING);
+    const seatdata = await store.get(TICKET.SEAT);
+    const location = await store.get(TICKET.LOCATION);
+    const cinemaLocation = await store.get(TICKET.CINEMA_LOCATION);
+
     if (datetime == null) {
       toast.error("Vui lòng chọn ngày xem", {
         duration: 1000,
@@ -54,7 +50,14 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
         duration: 1000,
       });
     } else {
-      router.push("/payment");
+      console.log("ticket info:", {
+        datetime,
+        timebook,
+        seatdata,
+        location,
+        cinemaLocation,
+      });
+      router.push(ROUTES.PAYMENT);
     }
   };
 
@@ -116,69 +119,78 @@ const TicketBookingSeat: React.FC<TicketBookingSeatProps> = ({
             {/*Seat select*/}
             {number.map((l, index) => (
               <div className="w-full flex flex-col items-center" key={index}>
-                {letter.map((n, index1) => {
-                  const isSelected = selectedSeat.includes(`${n}${l}`);
-                  return (
-                    <div
-                      className="row-span-1"
-                      key={(1 + index) * (1 + index1)}
-                    >
-                      <input
-                        type="checkbox"
-                        disabled={isSelected}
-                        defaultChecked={false}
-                        className={`appearance-none custom-checkbox w-4 h-4  ${
-                          isSelected ? "bg-rose-500" : "bg-slate-700"
-                        } border border-slate-400`}
-                        value={`${n}${l}`}
-                        onChange={async (
-                          e: React.ChangeEvent<HTMLInputElement>
-                        ) => {
-                          const location = await store.get("location");
-                          const cinemaLocation = await store.get(
-                            "cinema_location"
-                          );
-                          const datetime = await store.get("date_booking");
-                          const timebook = await store.get("time_booking");
-                          console.log(location);
-                          console.log(cinemaLocation);
-                          console.log(datetime);
-                          console.log(timebook);
-
-                          if (
-                            location == null ||
-                            cinemaLocation == null ||
-                            datetime == null ||
-                            timebook == null
-                          ) {
-                            e.target.checked = false;
-                          } else {
+                {letter.length > 0 &&
+                  letter.map((n, index1) => {
+                    const isSelected = selectedSeat.includes(`${n}${l}`);
+                    return (
+                      <div
+                        className="row-span-1"
+                        key={(1 + index) * (1 + index1)}
+                      >
+                        <input
+                          type="checkbox"
+                          disabled={isSelected}
+                          defaultChecked={false}
+                          className={`appearance-none custom-checkbox w-4 h-4  ${
+                            isSelected ? "bg-rose-500" : "bg-slate-700"
+                          } border border-slate-400`}
+                          value={`${n}${l}`}
+                          onChange={async (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            const location = await store.get(TICKET.LOCATION);
+                            const cinemaLocation = await store.get(
+                              TICKET.CINEMA_LOCATION
+                            );
+                            const datetime = await store.get(
+                              TICKET.DATE_BOOKING
+                            );
+                            const timebook = await store.get(
+                              TICKET.TIME_BOOKING
+                            );
                             console.log(location);
                             console.log(cinemaLocation);
                             console.log(datetime);
                             console.log(timebook);
-                            if (e.target.checked) {
-                              await store.set("seat", [
-                                ...seat,
-                                e.target.value,
-                              ]);
 
-                              setSeat([...seat, e.target.value]);
+                            if (
+                              location == null ||
+                              cinemaLocation == null ||
+                              datetime == null ||
+                              timebook == null
+                            ) {
+                              e.target.checked = false;
                             } else {
-                              await store.set(
-                                "seat",
-                                seat.filter((items) => items !== e.target.value)
-                              );
-                              setSeat(
-                                seat.filter((items) => items !== e.target.value)
-                              );
+                              console.log(location);
+                              console.log(cinemaLocation);
+                              console.log(datetime);
+                              console.log(timebook);
+                              if (e.target.checked) {
+                                await store.set(TICKET.SEAT, [
+                                  ...seat,
+                                  e.target.value,
+                                ]);
+
+                                setSeat([...seat, e.target.value]);
+                              } else {
+                                await store.set(
+                                  TICKET.SEAT,
+                                  seat.filter(
+                                    (items) => items !== e.target.value
+                                  )
+                                );
+                                setSeat(
+                                  seat.filter(
+                                    (items) => items !== e.target.value
+                                  )
+                                );
+                              }
                             }
-                          }
-                        }}
-                      ></input>
-                    </div>
-                  );
-                })}
+                          }}
+                        ></input>
+                      </div>
+                    );
+                  })}
               </div>
             ))}
             {/*Seat horizontal label*/}

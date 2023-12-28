@@ -1,6 +1,7 @@
 import React from "react";
 import { CinemaLocationType } from "../type/CinemaLocationType";
 import store from "../../../config/storage/IonicStorage";
+import { TICKET } from "../../../utils/SharedValues";
 
 interface TicketBookingProps {
   handleReRender: any;
@@ -15,8 +16,8 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
   );
 
   const setInitialValue = async () => {
-    await store.set("location", location);
-    await store.set("cinema_location", cinemaLocation);
+    await store.set(TICKET.LOCATION, location);
+    await store.set(TICKET.CINEMA_LOCATION, cinemaLocation);
   };
 
   const locationRef = React.useRef<HTMLSelectElement>(null);
@@ -66,7 +67,7 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
           className="w-full h-10 border rounded-md bg-white text-black p-2"
           ref={locationRef}
           onChange={async (e) => {
-            await store.set("location", e.target.value);
+            await store.set(TICKET.LOCATION, e.target.value);
             setLocation(e.target.value);
             console.log(e.target.value);
             await handleReRender();
@@ -92,7 +93,7 @@ const TicketBookingLocation: React.FC<TicketBookingProps> = ({
           onChange={async (
             e: React.ChangeEvent<HTMLSelectElement>
           ): Promise<void> => {
-            store.set("cinema_location", e.target.value);
+            store.set(TICKET.CINEMA_LOCATION, e.target.value);
             setCinemaLocation(e.target.value);
             console.log(e.target.value);
             await handleReRender();

@@ -1,6 +1,16 @@
 import supabase from "../../config/supabase/supabase";
 import MovieGetDTO from "../../dtos/MovieGetDTO";
 
+
+/* 
+  <summary>
+    Modified by: Hoa Pham
+    Modified on: 28-Dec-2023
+    Description: Get all movie from database
+  </summary>
+  <returns>Promise<MovieGetDTO[] | null | undefined></returns>
+*/
+
 export default async function SelectRelease(): Promise<
   MovieGetDTO[] | null | undefined
 > {
@@ -10,6 +20,7 @@ export default async function SelectRelease(): Promise<
     return null;
   }
   if (data) {
+    console.log(data);
     const movies: MovieGetDTO[] = data.map((movie: MovieGetDTO) => {
       return {
         id: movie.id,
