@@ -22,6 +22,7 @@ const PaymentStatus = (props: Props) => {
       await store.remove(TICKET.DATE_BOOKING);
       await store.remove(TICKET.TIME_BOOKING);
       await store.remove(TICKET.SEAT);
+      await store.remove(CURRENT_TICKET);
       console.log("removed");
     };
 
