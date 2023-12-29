@@ -45,7 +45,7 @@ import { ROUTES } from "./utils/SharedValues";
 import UpdatePassword from "./pages/forgot-password/UpdatePassword";
 import React from "react";
 import ReduxProvider from "./components/reduxStore/ReduxProvider";
-
+import AppUrlListener from "./components/apiListener/AppUrlListener";
 /* 
   <summary>
     Modified by: Hoa Pham
@@ -84,6 +84,7 @@ const App = () => {
       <MuiProvider>
         <IonApp>
           <IonReactRouter>
+            <AppUrlListener></AppUrlListener>
             <IonRouterOutlet>
               <AppLayout>
                 <Route
