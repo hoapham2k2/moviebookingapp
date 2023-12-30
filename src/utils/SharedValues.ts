@@ -22,4 +22,5 @@ const TICKET = {
 
 const CURRENT_TICKET = "currentTicket";
 
+
 export { CURRENT_USER, ROUTES, TICKET, CURRENT_TICKET };
