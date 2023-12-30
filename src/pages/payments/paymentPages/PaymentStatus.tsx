@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { CURRENT_TICKET, ROUTES, TICKET } from "../../../utils/SharedValues";
 import React from "react";
 import store from "../../../config/storage/IonicStorage";
+import { InsertTicket } from "../../../services/ticket/InsertTicket";
 
 type Props = {};
 
@@ -13,27 +14,6 @@ const PaymentStatus = (props: Props) => {
   const handleBackMain = () => {
     router.push(ROUTES.HOME);
   };
-  /* 
-    <summary>
-      Modified by: Hoa Pham
-      Modified on: 28-Dec-2023
-      Description: This below useEffect hook will clear the ticket booking data from the storage once the component is unmounted
-    </summary>
-  */
-  React.useEffect(() => {
-    const clearTicketBookingData = async () => {
-      await store.remove(TICKET.LOCATION);
-      await store.remove(TICKET.MOVIE_ID);
-      await store.remove(TICKET.CINEMA_LOCATION);
-      await store.remove(TICKET.DATE_BOOKING);
-      await store.remove(TICKET.TIME_BOOKING);
-      await store.remove(TICKET.SEAT);
-      await store.remove(CURRENT_TICKET);
-      console.log("removed");
-    };
-
-    clearTicketBookingData();
-  }, []);
 
   /* 
     <summary>
@@ -44,30 +24,75 @@ const PaymentStatus = (props: Props) => {
   */
   React.useEffect(() => {
     const handleQueryParams = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const vnp_TransactionStatus = urlParams.get("vnp_TransactionStatus");
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const vnp_TransactionStatus = urlParams.get("vnp_TransactionStatus");
 
-      if (vnp_TransactionStatus === "00") {
-        setPaymentStatus({
-          isSuccess: true,
-          message: "Your payment is successful",
-        });
-      } else {
-        setPaymentStatus({
-          isSuccess: false,
-          message: "Your payment is failed",
-        });
+        if (vnp_TransactionStatus === "00") {
+          await setPaymentStatus({
+            isSuccess: true,
+            message: "Your payment is successful",
+          });
+
+          const ticket = await store.get(CURRENT_TICKET);
+          console.log(ticket);
+          const response = await InsertTicket(ticket);
+          console.log(response);
+
+          if (response) {
+            await setPaymentStatus({
+              isSuccess: true,
+              message: "Your payment is successful",
+            });
+          } else {
+            await setPaymentStatus({
+              isSuccess: false,
+              message: "Your payment is failed",
+            });
+          }
+        }
+
+        await store.remove(TICKET.LOCATION);
+        await store.remove(TICKET.MOVIE_ID);
+        await store.remove(TICKET.CINEMA_LOCATION);
+        await store.remove(TICKET.DATE_BOOKING);
+        await store.remove(TICKET.TIME_BOOKING);
+        await store.remove(TICKET.SEAT);
+        console.log("removed");
+      } catch (error) {
+        console.log(error);
       }
     };
     handleQueryParams();
   }, []);
+
+  /* 
+    <summary>
+      Modified by: Hoa Pham
+      Modified on: 28-Dec-2023
+      Description: This below useEffect hook will clear the ticket booking data from the storage once the component is unmounted
+    </summary>
+  */
+  // React.useEffect(() => {
+  //   const clearTicketBookingData = async () => {
+  //     await store.remove(TICKET.LOCATION);
+  //     await store.remove(TICKET.MOVIE_ID);
+  //     await store.remove(TICKET.CINEMA_LOCATION);
+  //     await store.remove(TICKET.DATE_BOOKING);
+  //     await store.remove(TICKET.TIME_BOOKING);
+  //     await store.remove(TICKET.SEAT);
+  //     await store.remove(CURRENT_TICKET);
+  //     console.log("removed");
+  //   };
+  //   clearTicketBookingData();
+  // }, []);
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="relative flex flex-col items-center justify-center mt-36 mb-4">
         <div className="absolute w-28 h-28 bg-white rounded-full  "></div>
 
-        {paymentStatus.isSuccess === true ? (
+        {paymentStatus && paymentStatus.isSuccess === true ? (
           <CheckCircleIcon className="w-40 object-cover rounded-full text-green-600 z-10" />
         ) : (
           <XCircleIcon className="w-40 object-cover rounded-full text-rose-600 z-10" />
