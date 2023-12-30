@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">my-android-app</string>
-    <string name="title_activity_main">my-android-app</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">android-app</string>
+    <string name="title_activity_main">android-app</string>
+    <string name="package_name">com.moviebookingapp.deeplinks</string>
+    <string name="custom_url_scheme">com.moviebookingapp.deeplinks</string>
 </resources>
