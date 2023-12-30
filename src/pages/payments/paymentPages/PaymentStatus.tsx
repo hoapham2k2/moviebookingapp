@@ -29,23 +29,18 @@ const PaymentStatus = (props: Props) => {
         const vnp_TransactionStatus = urlParams.get("vnp_TransactionStatus");
 
         if (vnp_TransactionStatus === "00") {
-          await setPaymentStatus({
-            isSuccess: true,
-            message: "Your payment is successful",
-          });
-
           const ticket = await store.get(CURRENT_TICKET);
           console.log(ticket);
           const response = await InsertTicket(ticket);
           console.log(response);
 
           if (response) {
-            await setPaymentStatus({
+            setPaymentStatus({
               isSuccess: true,
               message: "Your payment is successful",
             });
           } else {
-            await setPaymentStatus({
+            setPaymentStatus({
               isSuccess: false,
               message: "Your payment is failed",
             });
