@@ -54,7 +54,9 @@ export const GetSelectedSeat = async () => {
 
 
   if (data != null) {
-    listResult = JSON.parse(data[0].seat);
+    if(data[0].seat!=null){
+      listResult = JSON.parse(data[0].seat);
+    }
   }
   console.log("data result", data);
 
