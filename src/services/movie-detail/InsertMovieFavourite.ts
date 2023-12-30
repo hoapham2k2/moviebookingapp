@@ -1,5 +1,6 @@
 import supabase from "../../config/supabase/supabase";
 import store from "../../config/storage/IonicStorage";
+import { CURRENT_USER } from "../../utils/SharedValues";
 
 
 /* 
@@ -21,7 +22,7 @@ export const InsertFavourite = async (movieId: number): Promise<boolean> => {
   } else {
     const insertFavouriteUser = async () => {
       //get data from local to get user_id
-      const value = await store.get("myUser");
+      const value = await store.get(CURRENT_USER);
       //value["id"] contain user id
       console.log(value["id"]);
       //call insert api from supabase
