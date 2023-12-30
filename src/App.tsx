@@ -84,84 +84,85 @@ const App = () => {
       <MuiProvider>
         <IonApp>
           <IonReactRouter>
-            <AppUrlListener></AppUrlListener>
-            <IonRouterOutlet>
-              <AppLayout>
-                <Route
-                  path={ROUTES.HOME}
-                  component={() => (
-                    <PrivateRoutesWrapper route={ROUTES.HOME}>
-                      <Home />
-                    </PrivateRoutesWrapper>
-                  )}
-                  exact={true}
-                />
-                <Route
-                  path={ROUTES.TICKETS_LIST}
-                  component={() => (
-                    <PrivateRoutesWrapper route={ROUTES.TICKETS_LIST}>
-                      <TicketsListPage />
-                    </PrivateRoutesWrapper>
-                  )}
-                  exact={true}
-                />
-                <Route
-                  path={ROUTES.WISH_LIST}
-                  component={() => (
-                    <PrivateRoutesWrapper route={ROUTES.WISH_LIST}>
-                      <WishListPage />
-                    </PrivateRoutesWrapper>
-                  )}
-                  exact={true}
-                />
-                <Route
-                  path={ROUTES.PROFILE}
-                  component={() => (
-                    <PrivateRoutesWrapper route={ROUTES.PROFILE}>
-                      <ProfilePage />
-                    </PrivateRoutesWrapper>
-                  )}
-                  exact={true}
-                />
-                <Route
-                  path={ROUTES.HOME_DETAIL}
-                  component={() => <MovieDetailPage />}
-                  exact={true}
-                />
-                <Route
-                  path={ROUTES.TICKET_DETAIL}
-                  component={() => <TicketBookingPage />}
-                  exact={true}
-                />
-              </AppLayout>
+            <AppUrlListener>
+              <IonRouterOutlet>
+                <AppLayout>
+                  <Route
+                    path={ROUTES.HOME}
+                    component={() => (
+                      <PrivateRoutesWrapper route={ROUTES.HOME}>
+                        <Home />
+                      </PrivateRoutesWrapper>
+                    )}
+                    exact={true}
+                  />
+                  <Route
+                    path={ROUTES.TICKETS_LIST}
+                    component={() => (
+                      <PrivateRoutesWrapper route={ROUTES.TICKETS_LIST}>
+                        <TicketsListPage />
+                      </PrivateRoutesWrapper>
+                    )}
+                    exact={true}
+                  />
+                  <Route
+                    path={ROUTES.WISH_LIST}
+                    component={() => (
+                      <PrivateRoutesWrapper route={ROUTES.WISH_LIST}>
+                        <WishListPage />
+                      </PrivateRoutesWrapper>
+                    )}
+                    exact={true}
+                  />
+                  <Route
+                    path={ROUTES.PROFILE}
+                    component={() => (
+                      <PrivateRoutesWrapper route={ROUTES.PROFILE}>
+                        <ProfilePage />
+                      </PrivateRoutesWrapper>
+                    )}
+                    exact={true}
+                  />
+                  <Route
+                    path={ROUTES.HOME_DETAIL}
+                    component={() => <MovieDetailPage />}
+                    exact={true}
+                  />
+                  <Route
+                    path={ROUTES.TICKET_DETAIL}
+                    component={() => <TicketBookingPage />}
+                    exact={true}
+                  />
+                </AppLayout>
 
-              <Route path="/page/:name" component={AppLayout} exact={true} />
-              <Route path="/login" component={LoginPage} exact={true} />
-              <Route path="/register" component={RegisterPage} exact={true} />
-              <Route
-                path="/forgot-password"
-                component={ForgotPasswordPage}
-                exact={true}
-              />
-              <Route
-                path={ROUTES.UPDATE_PASSWORD}
-                component={UpdatePassword}
-                exact={true}
-              />
-              <Route
-                path={ROUTES.PAYMENT}
-                component={() => <Payment />}
-                exact={true}
-              />
-              <Route
-                path={ROUTES.PAYMENT_STATUS}
-                component={() => <PaymentStatus />}
-                exact={true}
-              />
-              <Route exact path="/">
-                {mySession ? <Redirect to={ROUTES.HOME} /> : <LoginPage />}
-              </Route>
-            </IonRouterOutlet>
+                <Route path="/page/:name" component={AppLayout} exact={true} />
+                <Route path="/login" component={LoginPage} exact={true} />
+                <Route path="/register" component={RegisterPage} exact={true} />
+                <Route
+                  path="/forgot-password"
+                  component={ForgotPasswordPage}
+                  exact={true}
+                />
+                <Route
+                  path={ROUTES.UPDATE_PASSWORD}
+                  component={UpdatePassword}
+                  exact={true}
+                />
+                <Route
+                  path={ROUTES.PAYMENT}
+                  component={() => <Payment />}
+                  exact={true}
+                />
+                <Route
+                  path={ROUTES.PAYMENT_STATUS}
+                  component={() => <PaymentStatus />}
+                  exact={true}
+                />
+                <Route exact path="/">
+                  {mySession ? <Redirect to={ROUTES.HOME} /> : <LoginPage />}
+                </Route>
+              </IonRouterOutlet>
+            </AppUrlListener>
           </IonReactRouter>
         </IonApp>
       </MuiProvider>
