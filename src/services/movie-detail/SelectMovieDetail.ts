@@ -11,7 +11,6 @@ import MovieGetDTO from "../../dtos/MovieGetDTO";
   <param name="id_movie">the movie id to get detail</param>
   <returns>MovieGetDTO</returns>
 */
-
 export default async function SelectMovieDetail(
   id_movie: Number
 ): Promise<MovieGetDTO | null | undefined> {

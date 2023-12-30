@@ -8,23 +8,28 @@ import store from "../../config/storage/IonicStorage";
 import GetVNPayCheckoutUrl from "../../services/payment/VNPay";
 import { CURRENT_TICKET, CURRENT_USER, TICKET } from "../../utils/SharedValues";
 import TicketGetDTO from "../../dtos/TicketGetDTO";
-
+import VNPAYLOGO from "../../../public/vnpaylogo.png";
+import MOMOLOGO from "../../../public/momo_square_pinkbg.svg";
+import toast from "react-hot-toast";
 type Props = {};
 
 const Payment = (props: Props) => {
-  // const [currentMovie, setCurrentMovie] = useState<any>(-1);
   const router = useHistory();
   const [ticketId, setTicketId] = useState<number>(-1);
+  const [currentMovie, setCurrentMovie] = useState<any>(-1);
 
-  // useEffect(() => {
-  //   const getCurrentIdMovie = async () => {
-  //     const movieId = await store.get(TICKET.MOVIE_ID);
-  //     setCurrentMovie(movieId);
-  //   };
-  //   getCurrentIdMovie();
-  // }, []);
+  /* 
+  
+  */
+  useEffect(() => {
+    const getCurrentIdMovie = async () => {
+      const movieId = await store.get(TICKET.MOVIE_ID);
+      setCurrentMovie(movieId);
+    };
+    getCurrentIdMovie();
+  }, []);
 
-  const handlePayment = async () => {
+  const handlePaymentWithVNPay = async () => {
     const ticket = new TicketGetDTO();
 
     ticket.movie_id = await store.get(TICKET.MOVIE_ID);
@@ -48,17 +53,21 @@ const Payment = (props: Props) => {
     window.location.href = payment_url;
   };
 
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max);
+  const handlePaymentWithMomo = () => {
+    toast("We are just developing this features, sorry for inconvenience");
+  };
+
+  const handlePaymentWithCryptoWallet = () => {
+    toast("We are just developing this features, sorry for inconvencience");
   };
 
   return (
     <div className="relative flex flex-col items-center justify-center">
       {/**Header */}
       <header className="absolute text-lg font-semibold top-3 flex w-full items-center justify-between border-b-2 border-slate-800 pb-4">
-        {/* <Link to={`/home/ticket/movieId=${currentMovie}`}>
+        <Link to={`/home/ticket/movieId=${currentMovie}`}>
           <ArrowLeftIcon className="w-6 h-6 ml-2" />
-        </Link> */}
+        </Link>
         Payment
         <div className="w-6"></div>
       </header>
@@ -71,31 +80,35 @@ const Payment = (props: Props) => {
           </p>
           <div>
             <div className="flex items-center justify-between mt-4 bg-slate-900 rounded-xl py-2 my-2 active:scale-95 transition-all duration-200 ease-in-out">
-              <div className="flex items-center justify-start gap-4">
-                <CreditCardIcon className="w-6 h-6 ml-3" />
+              <div
+                className="flex items-center justify-start gap-4"
+                onClick={handlePaymentWithMomo}
+              >
+                <img src={MOMOLOGO} className="w-6 h-6 ml-3" />
                 <div>
-                  <p>Debit, Credit Card</p>
-                  <p className="text-xs text-slate-300">Pay with Visa</p>
+                  <p>Momo</p>
+                  <p className="text-xs text-slate-300">Pay with Mono</p>
                 </div>
               </div>
               <ArrowRightIcon className="w-6 h-6 mr-1 " />
             </div>
             <div
               className="flex items-center justify-between mt-4 bg-slate-900 rounded-xl py-2 my-2 active:scale-95 transition-all duration-300 ease-in-out"
-              onClick={handlePayment}
+              onClick={handlePaymentWithVNPay}
             >
               <div className="flex items-center justify-start gap-4">
-                <BsBank className="w-6 h-6 ml-3" />
+                <img src={VNPAYLOGO} className="w-6 h-6 ml-3" />
                 <div>
-                  <p>Bank Transfer</p>
-                  <p className="text-xs text-slate-300">
-                    Make transfers from your bank account
-                  </p>
+                  <p>VNPAY</p>
+                  <p className="text-xs text-slate-300">Pay with VNPAY</p>
                 </div>
               </div>
               <ArrowRightIcon className="w-6 h-6 mr-1 " />
             </div>
-            <div className="flex items-center justify-between mt-4 bg-slate-900 rounded-xl py-2 my-2 active:scale-95 transition-all duration-200 ease-in-out">
+            <div
+              className="flex items-center justify-between mt-4 bg-slate-900 rounded-xl py-2 my-2 active:scale-95 transition-all duration-200 ease-in-out"
+              onClick={handlePaymentWithCryptoWallet}
+            >
               <div className="flex items-center justify-start gap-4">
                 <BsWallet className="w-6 h-6 ml-3" />
                 <div>
