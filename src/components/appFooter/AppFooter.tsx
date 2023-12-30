@@ -1,10 +1,8 @@
 import { IonFooter, IonToolbar } from "@ionic/react";
-import React, { useEffect } from "react";
 import { AiFillHome } from "react-icons/ai";
 import { BsFillTicketPerforatedFill } from "react-icons/bs";
-import { AiTwotoneHeart } from "react-icons/ai";
-import { FaUserAlt } from "react-icons/fa";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { FaHeart, FaUserAlt } from "react-icons/fa";
+import { NavLink, useHistory } from "react-router-dom";
 
 type Props = {};
 
@@ -12,7 +10,7 @@ const AppFooter = (props: Props) => {
   const router = useHistory();
   const listNavItems = [
     {
-      title: "Home",
+    title: "Home",
       url: "/home",
       icon: <AiFillHome />,
     },
@@ -24,7 +22,7 @@ const AppFooter = (props: Props) => {
     {
       title: "Wishlist",
       url: "/wishlist",
-      icon: <AiTwotoneHeart />,
+      icon: <FaHeart />,
     },
     {
       title: "Profile",

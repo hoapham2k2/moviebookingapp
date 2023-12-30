@@ -4,13 +4,22 @@ import { useHistory } from "react-router-dom";
 import { CURRENT_TICKET, ROUTES, TICKET } from "../../../utils/SharedValues";
 import React from "react";
 import store from "../../../config/storage/IonicStorage";
+import { Plugins } from '@capacitor/core';
+
+const { Deeplinks } = Plugins;
 
 type Props = {};
 
 const PaymentStatus = (props: Props) => {
   const router = useHistory();
-  const handleBackMain = () => {
-    router.push(ROUTES.HOME);
+  const handleBackMain = async() => {
+    //TODO: handle deeplink here
+    // router.push(ROUTES.HOME);
+    await Deeplinks.router({
+      '/home':async()=>{
+        router.push(ROUTES.HOME);
+      }
+    })
   };
   const isSuccess = true;
 
