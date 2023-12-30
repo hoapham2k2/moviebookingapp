@@ -22,11 +22,55 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+
+            <!--
+                Deep links for the app
+                https://developer.android.com/training/app-links/deep-linking
+
+                https://moviebookingapp.vercel.app/ (https://moviebookingapp.vercel.app/home)
+            -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="moviebookingapp.vercel.app" />
+                <data
+                    android:scheme="https"
+                    android:host="moviebookingapp.vercel.app"
+                    android:pathPrefix="/home"/>  <!-- This is the path to the app -->
+            </intent-filter>
+
+<!--
+    deeplink for the app to open the app from the browser or other apps
+    https://moviebookingapp.vercel.app/*
+    https://moviebookingapp.vercel.app/home
+    https://moviebookingapp.vercel.app/home/1
+    https://moviebookingapp.vercel.app/home/1/2
+-->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="moviebookingapp.vercel.app"
+                    android:pathPattern=".*" />
+            </intent-filter>
+
+            <!--
+                Deep links for the app
+                https://developer.android.com/training/app-links/deep-linking
+
+                https://moviebookingapp.vercel.app/ (https://moviebookingapp.vercel.app/home)
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="moviebookingapp.vercel.app"
+                    android:pathPrefix="/home"
+                    android:pathPattern=".*" />
             </intent-filter>
 
         </activity>

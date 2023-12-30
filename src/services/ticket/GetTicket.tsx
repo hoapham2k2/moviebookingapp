@@ -2,10 +2,11 @@ import supabase from "../../config/supabase/supabase";
 import store from "../../config/storage/IonicStorage";
 
 import TicketGetDTO from "../../dtos/TicketGetDTO";
+import { CURRENT_USER } from "../../utils/SharedValues";
 
 export const GetAllCurrentTicket = async () => {
-  const value = await store.get("myUser");
-
+  const value = await store.get(CURRENT_USER);
+  console.log("value", value);
   let { data, error } = await supabase
     .from("tbl_ticket")
     .select(
