@@ -21,6 +21,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
+    "@ionic-native/deeplinks": "^5.36.0",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "@ionic/storage": "^4.0.0",
