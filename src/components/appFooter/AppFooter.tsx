@@ -23,7 +23,7 @@ const AppFooter = (props: Props) => {
       title: "Wishlist",
       url: "/wishlist",
       icon: <FaHeart />,
-      icon: <FaHeart />,
+     
     },
     {
       title: "Profile",

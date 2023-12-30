@@ -23,6 +23,7 @@ const HeaderSection = (props: Props) => {
   const [imageSrc, setImageSrc] = React.useState<string>("");
   var timeoutId: any;
 
+  //Modified by Bao (30/12/2023): Search movie function
   const handleSearch = (e: any) => {
     if (e.target.value == "") {
       setIsSearching(false);

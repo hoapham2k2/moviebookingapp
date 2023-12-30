@@ -5,7 +5,7 @@ export default async function SearchMovie(search: string) {
   let { data, error } = await supabase
     .from("tbl_movie")
     .select("*")
-    .like("title", `%${search}%`);
+    .ilike("title", `%${search}%`);
 
   if (error) {
     return null;
