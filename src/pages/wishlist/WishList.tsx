@@ -9,7 +9,8 @@ type Props = {};
 const WishListPage = (props: Props) => {
   const [wishlist, setWishList] = useState<Array<any>>();
   useEffect(() => {
-    const getWishList = async () => {
+    const getWishList = async () => { 
+      console.log("geting wishlist");
       const resWishList = await GetWishList();
       setWishList(resWishList?.reverse());
     };
