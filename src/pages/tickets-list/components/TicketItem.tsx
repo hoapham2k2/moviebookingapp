@@ -84,7 +84,7 @@ const TicketItem: React.FC<TicketComponent> = ({
               <h3 className="text-sm text-slate-500 mb-1">Seat</h3>
               <p className="text-xs">
                 {" "}
-                {seat.length > 8 ? seat.substring(0, 8) + "..." : seat}
+                {seat.length > 3 ? seat.toString().match(/.{1,2}/g) + "..." : seat.toString().match(/.{1,2}/g)}
               </p>
             </div>
             <div className="flex flex-col">

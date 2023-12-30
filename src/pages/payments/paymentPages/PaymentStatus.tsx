@@ -53,7 +53,6 @@ const PaymentStatus = (props: Props) => {
             message: "Your payment is failed",
           });
         }
-
   
       } catch (error) {
         console.log(error);
