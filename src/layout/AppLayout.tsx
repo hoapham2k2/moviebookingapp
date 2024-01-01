@@ -12,7 +12,6 @@ import {
 type Props = {
   children: React.ReactNode;
 };
-console.log(1)
 
 const AppLayout = (props: Props) => {
   return (
