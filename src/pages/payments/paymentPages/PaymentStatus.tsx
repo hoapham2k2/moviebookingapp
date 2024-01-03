@@ -10,8 +10,22 @@ type Props = {};
 
 const PaymentStatus = (props: Props) => {
   const [paymentStatus, setPaymentStatus] = React.useState<any>({});
+  const [response, setResponse] = React.useState<boolean>(false);
   const router = useHistory();
-  const handleBackMain = () => {
+  const handleBackMain = async () => {
+    if (paymentStatus.isSuccess == true) {
+      const ticket = await store.get(CURRENT_TICKET);
+      console.log(ticket);
+      const response = await InsertTicket(ticket);
+      console.log(response);
+      await store.remove(TICKET.LOCATION);
+      await store.remove(TICKET.MOVIE_ID);
+      await store.remove(TICKET.CINEMA_LOCATION);
+      await store.remove(TICKET.DATE_BOOKING);
+      await store.remove(TICKET.TIME_BOOKING);
+      await store.remove(TICKET.SEAT);
+      console.log("removed");
+    }
     router.push(ROUTES.HOME);
   };
 
@@ -29,31 +43,17 @@ const PaymentStatus = (props: Props) => {
         const vnp_TransactionStatus = urlParams.get("vnp_TransactionStatus");
 
         if (vnp_TransactionStatus === "00") {
-          const ticket = await store.get(CURRENT_TICKET);
-          console.log(ticket);
-          const response = await InsertTicket(ticket);
-          console.log(response);
-
-          if (response) {
-            setPaymentStatus({
-              isSuccess: true,
-              message: "Your payment is successful",
-            });
-          } else {
-            setPaymentStatus({
-              isSuccess: false,
-              message: "Your payment is failed",
-            });
-          }
+          setPaymentStatus({
+            isSuccess: true,
+            message: "Your payment is successful",
+          });
+        } else {
+          setPaymentStatus({
+            isSuccess: false,
+            message: "Your payment is failed",
+          });
         }
-
-        await store.remove(TICKET.LOCATION);
-        await store.remove(TICKET.MOVIE_ID);
-        await store.remove(TICKET.CINEMA_LOCATION);
-        await store.remove(TICKET.DATE_BOOKING);
-        await store.remove(TICKET.TIME_BOOKING);
-        await store.remove(TICKET.SEAT);
-        console.log("removed");
+  
       } catch (error) {
         console.log(error);
       }

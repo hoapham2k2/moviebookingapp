@@ -11,4 +11,5 @@ export default class MovieGetDTO {
   description: string = "";
   duration: string = "";
   category: string = "";
+
 }

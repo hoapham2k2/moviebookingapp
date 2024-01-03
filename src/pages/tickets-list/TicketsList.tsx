@@ -36,7 +36,7 @@ const TicketsListPage = (props: Props) => {
                 location={ticket.location}
                 price={ticket.price}
                 quality={ticket.tbl_movie.quality}
-                seat={ticket.seat}
+                seat={JSON.parse(ticket.seat)}
                 start={ticket.booking_time}
                 thumbnail={ticket.tbl_movie.thumbnail}
                 date={ticket.booking_date}

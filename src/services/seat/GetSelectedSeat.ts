@@ -51,11 +51,14 @@ export const GetSelectedSeat = async () => {
 
   var listResult: any = [];
 
+
+
   if (data != null) {
-    for (let i = 0; i < data!.length; i++) {
-      listResult = listResult.concat(data![i]["seat"].split(","));
+    if(data[0].seat!=null){
+      listResult = JSON.parse(data[0].seat);
     }
   }
+  console.log("data result", data);
 
   console.log("list seat: ", listResult);
   await store.set("selected-seat", listResult);
